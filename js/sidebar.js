@@ -23,7 +23,7 @@ $(function () {
         })
         $('#toggle-sidebar').velocity('stop').velocity({
           rotateZ: '0deg',
-          color: '#1F2D3D'
+          color: '#1D1D1D'
         }, {
           duration: 200
         })
