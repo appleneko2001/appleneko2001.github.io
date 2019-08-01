@@ -6,7 +6,7 @@ $(function () {
     changeSideBarInfo()
   })
   $('#toggle-sidebar').on('click', function () {
-    if (!isMobile() && $('#sidebar').is(':visible')) {
+    if ($('#sidebar').is(':visible')) {
       var isOpen = $(this).hasClass('on')
       isOpen ? $(this).removeClass('on') : $(this).addClass('on')
       if (isOpen) {
