@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UEFI啟動 on My New Hugo Site</title>
+    <link>http://example.org/categories/uefi%E5%95%9F%E5%8B%95/</link>
+    <description>Recent content in UEFI啟動 on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 05 Jun 2019 21:29:19 +0000</lastBuildDate><atom:link href="http://example.org/categories/uefi%E5%95%9F%E5%8B%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>可透過UEFI啓動的Windows安裝做法</title>
+      <link>http://example.org/blog/2019/06/%E5%8F%AF%E9%80%8F%E9%81%8Euefi%E5%95%93%E5%8B%95%E7%9A%84windows%E5%AE%89%E8%A3%9D%E5%81%9A%E6%B3%95/</link>
+      <pubDate>Wed, 05 Jun 2019 21:29:19 +0000</pubDate>
+      
+      <guid>http://example.org/blog/2019/06/%E5%8F%AF%E9%80%8F%E9%81%8Euefi%E5%95%93%E5%8B%95%E7%9A%84windows%E5%AE%89%E8%A3%9D%E5%81%9A%E6%B3%95/</guid>
+      <description>PS：這只是一個作者的筆記而已 可能會不太認真解說正確做法。
+昨天上同學家裡給他的設備安裝系統 因爲想弄的更好一點 有UEFI支援 但是忘記了如何正確製作。鹹魚這裏在Blog上分享一下如何正確安裝有UEFI支援的Windows的要求跟方法，順便留一個筆記。
+我查閱了一下Microsoft的官方網站對UEFI的正確標準後 我整理了以下幾個安裝條件：
+至少要求設備有UEFI支援才能用這種方式安裝 有Microsoft Windows的官方安裝媒體（光盤，USB閃存盤） 硬碟格式必須是GPT，這是UEFI的必須要求 幾個Microsoft提出的主要硬碟的分割區分佈 下面會詳細解釋如何製作 官方Microsoft的MSDN頁面有提供分割區分佈 並且設定方式 但是儘管如此我還是想自己寫出來都需要什麼。
+Tips：下面的操作比較危險 因爲要用到硬碟管理工具（比如DiskPart， PartAssist等工具 錯誤的操作可能會導致數據丟失。如果有重要的數據請提前複製出來。）
+下面將會演示如何正確操作 由於一些原因 鹹魚使用了虛擬機進行演示 （因爲錯過了實體機器操作記錄下來）不過操作方式是完全一樣的。
+設定硬碟跟分割區分佈我們需要用到DiskPart，在使用官方安裝媒體啓動了安裝環境過後 使用Shift+F10按鍵呼出Command Prompt 然後輸入diskpart即可啓動DiskPart
+圖1. diskpart硬碟設定程式
+進入DiskPart程式後 先輸入list disk來查看已經連線的硬碟並列出來 之後選擇要不要轉換成GPT
+圖2. 列出已連線的硬碟列表
+如果當前要操作的硬碟不是GPT分割區表格式的話 需要轉換成GPT才可以用於工作UEFI。轉換的時候會有可能丟失數據 記得備份好之後再來操作。
+因爲當前的演示機器裡的硬碟不是GPT格式，需要轉換一下才可以。 轉換的指令是convert gpt，但是需要先選擇要操作的硬碟（指令是select disk 硬碟號 或者是sel disk 硬碟號）
+圖3. 轉換成GPT格式
+轉換成功後 接下來就是創建幾個必須的硬碟分割區。Microsoft給出的標準裡要求硬碟上要有4個（可以是三個 如果不需要緊急復原模組的話）從左到右的順序是：EFI啓動分割區 , MSR（Microsoft Reserved Partition，微軟保留分割區） , Windows作業系統 跟RE（復原環境，可以不設定）。
+EFI啓動分割區的要求是至少要有100兆字節的空間， 這個分割區用於存放啓動作業系統時要用到的模組，並且要用FAT32的檔案格式才可以正常的讓UEFI在這個分割區啓動（因爲是第一個分割區 所以先中槍XD）。
+MSR分割區用於讓UEFI辨別硬碟，和一些其他用途。它不能用於存放數據用，因此它的要求至少要有16兆字節（也可以用Microsoft建議的128兆字節）。
+作業系統的話可以先計算一下 前提是是否需要RE，如果需要的話 本鹹魚建議RE分配1GB的位置 然後剩下的就是作業系統要用到的。Windows作業系統至少要求是20GB（Microsoft官方說法）不過如果到了後面需要安裝一些東西的話，20GB完全不夠用 建議至少80GB能夠確保Windows作業系統分割磁區夠用而不去冒着數據丟失的風險擴容。</description>
+    </item>
+    
+  </channel>
+</rss>

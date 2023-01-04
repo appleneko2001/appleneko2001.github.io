@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arch Linux on My New Hugo Site</title>
+    <link>http://example.org/categories/arch-linux/</link>
+    <description>Recent content in Arch Linux on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Dec 2020 00:05:00 +0000</lastBuildDate><atom:link href="http://example.org/categories/arch-linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>  Yet Another Installation Guide for Arch Linux  </title>
+      <link>http://example.org/blog/2019/06/yaig-arch/</link>
+      <pubDate>Tue, 15 Dec 2020 00:05:00 +0000</pubDate>
+      
+      <guid>http://example.org/blog/2019/06/yaig-arch/</guid>
+      <description>Yet Another Installation Guide for Arch Linux 本文旨在让 Linux 初学者也能自行安装，并把 Arch Linux 作为日常使用的桌面操作系统。 因为面向初学者，内容会尽量详细，需注意本文会推荐非自由软件，而且一些操作是有多种方法可选的。 编写文档使用的 Markdown 渲染器为 Typora 。 目录 [TOC]
+注意事项&amp;amp;参考信息 数据无价，对磁盘进行操作之前一定要备份重要数据 (后面不再强调)。
+仔细阅读提示，如果出现问题建议先尝试自行查找资料并解决问题。
+准备一个合适的安装介质，当然还有安装 Arch Linux 的计算机。
+另一个可以浏览本文的电子设备。
+稳定快速的网络连接。
+如果阅读本文同时遇到问题，可以参考官方页面:
+Installation guide
+General recommendations
+List of applications
+帮您选择：
+用 Etcher 制作安装介质最简单。
+启动方式首选 UEFI 启动模式。
+使用交换分区，不用交换文件。
+(一些文件系统可能不兼容交换分区)
+显示服务器建议使用 Xorg 。
+Nvidia 显卡建议使用闭源驱动程序，其他显卡则使用开源驱动。
+桌面环境建议 KDE plasma 。
+显示管理器建议 sddm 。
+使用 AUR 助手：yay。
+网络浏览器建议使用 FireFox 。
+获取安装映像 访问 下载 页面，并根据需要的引导方式，获取最新的 ISO 文件或 netboot 映像以及相应的 GnuPG 签名。</description>
+    </item>
+    
+  </channel>
+</rss>
