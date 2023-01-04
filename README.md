@@ -1,8 +1,8 @@
-# 個人部落格站點
+> 界面設計準備中，有些頁面將無法正常訪問。
 
-由[Github Pages](https://pages.github.com/) & [Hexo](https://hexo.io)提供技術支援  
-界面風格使用: [Hexo-Theme-Melody](https://github.com/Molunerfinn/hexo-theme-melody/)  
-界面風格修改: [appleneko2001](https://github.com/appleneko2001)  
-使用留言模組: [Gitalk](https://github.com/gitalk/gitalk)  
+由 [Github Pages](https://pages.github.com/) & [GoHugo](https://gohugo.io/) 提供技術支援  
+界面風格自創，參考谷歌質感設計。
 
 [按下這裡進入站點](https://appleneko2001.github.io)
+
+舊版頁面已經封存到archived1分支。
