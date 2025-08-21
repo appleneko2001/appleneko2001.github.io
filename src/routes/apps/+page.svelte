@@ -1,0 +1,31 @@
+<script>
+    import { fly } from 'svelte/transition'
+
+    import LinkButton from "$lib/components/link-button.svelte";
+</script>
+
+<div class="apps-page"
+     in:fly={{ x: 200, duration: 300, delay: 300 }}
+     out:fly={{ x: 200, duration: 300 }}>
+    <div class="page-header">
+        <LinkButton icon="arrow-left" href="/home" />
+        <div class="header-text">Apps</div>
+    </div>
+</div>
+
+<style>
+    .apps-page {
+        position: sticky;
+        min-height: max(560px, 100vh);
+    }
+
+    .page-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5em;
+    }
+
+    .page-header > .header-text {
+        font-size: 1.4em;
+    }
+</style>

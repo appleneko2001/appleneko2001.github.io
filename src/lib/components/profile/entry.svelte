@@ -1,0 +1,68 @@
+<script lang="ts">
+    import "$lib/themes/theming.css";
+
+    // icon provider: simple-icons
+    let { icon, text = "text", href } = $props();
+</script>
+
+<a class="profile-button" href={href}>
+    <!-- {@render icon?.()} -->
+    {#if icon}
+        <div class="icon"
+             style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
+    {/if}
+    
+    <span class="text">
+        <span>{text}</span>
+    </span>
+</a>
+
+<style>
+    a {
+        text-decoration: none;
+        color: var(--foreground-colour);
+    }
+
+    .profile-button{
+        display: flex;
+        flex-wrap: nowrap;
+        position: relative;
+        padding: 8px;
+        align-items: center;
+
+        border: transparent 2px solid;
+        border-radius: 8px;
+        transition: all 0.25s linear;
+    }
+
+    .profile-button > .icon{
+        width: 32px;
+        height: 32px;
+        background: var(--foreground-colour);
+        mask-size: cover;
+    }
+
+    .profile-button > .text {
+        max-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: max-width 0.25s linear;
+        font-size: 1.2em;
+        /*transition: width 0.25s ease-in-out,
+                    background-color 0.25s ease-in-out;*/
+    }
+
+    .profile-button > .text > span {
+        margin-left: 8px;
+    }
+
+    .profile-button:focus,
+    .profile-button:hover
+    {
+        border: var(--foreground-colour) 2px solid;
+
+        > .text{
+            max-width: 100%;
+        }
+    }
+</style>

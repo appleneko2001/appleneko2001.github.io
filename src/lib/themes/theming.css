@@ -1,0 +1,15 @@
+:root{
+    --foreground-colour: #000;
+    --background-colour: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root{
+        --foreground-colour: #fff;
+        --background-colour: #000;
+    }
+}
+
+* {
+    color: var(--foreground-colour);
+}
