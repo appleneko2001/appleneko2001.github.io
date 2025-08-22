@@ -9,8 +9,8 @@
 
 <style>
     .profile-avatar{
-        width:320px;
-        height:320px;
+        width:260px;
+        height:260px;
         background-size:cover;
         border-radius: 50%;
     }

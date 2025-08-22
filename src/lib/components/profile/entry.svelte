@@ -2,7 +2,7 @@
     import "$lib/themes/theming.css";
 
     // icon provider: simple-icons
-    let { icon, text = "text", href, expanded = false, hint = text } = $props();
+    let { icon, text = "text", href, expanded = false, hint = text } : {icon?: any, text?: string, href?: string, expanded?: boolean, hint?: string | null } = $props();
 </script>
 
 <a class="profile-button"
@@ -60,13 +60,15 @@
         transition: max-width 0.25s linear;
     }
 
-    .profile-button:focus,
-    .profile-button:hover
+    .profile-button:focus, .profile-button:hover
     {
         border: var(--foreground-colour) 2px solid;
+    }
 
-        :not(.expanded) > .text{
-            max-width: 100%;
+    .profile-button:not(.expanded):focus, .profile-button:not(.expanded):hover
+    {
+        .text {
+            max-width: 200px;
         }
     }
 </style>
