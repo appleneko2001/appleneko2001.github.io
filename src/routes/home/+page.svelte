@@ -22,6 +22,9 @@
                       href="https://github.com/appleneko2001"/>
         <ProfileEntry icon="osu" text="osu!"
                       href="https://osu.ppy.sh/users/11455502"/>
+    </div>
+
+    <div class="entries">
         <ProfileEntry icon="pwa" text="Apps" expanded={true} hint={null}
                       href="/apps"/>
     </div>
