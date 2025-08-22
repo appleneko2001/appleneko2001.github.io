@@ -1,4 +1,9 @@
-# sv
+Personal portfolio and apps repository
+https://website.appleneko2001.workers.dev/
+
+[Powered by SvelteKit](https://svelte.dev/) ・ [Cloudflare Worker (hosting)](https://workers.cloudflare.com/)
+
+<!--# sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
@@ -36,3 +41,4 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+-->
