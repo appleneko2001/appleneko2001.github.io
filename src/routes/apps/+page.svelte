@@ -5,6 +5,11 @@
     import LinkButton from "$lib/components/link-button.svelte";
 </script>
 
+<svelte:head>
+    <title>Apps</title>
+    <meta name="description" content="my PWA apps" />
+</svelte:head>
+
 <div class="apps-page"
      in:fly={{ x: 200, duration: 300, delay: 300 }}
      out:fly={{ x: 200, duration: 300 }}>

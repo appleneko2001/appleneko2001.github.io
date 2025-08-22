@@ -5,6 +5,11 @@
     //import avatar from "$lib/assets/avatar.jpg";
 </script>
 
+<svelte:head>
+    <title>Portfolio</title>
+    <meta name="description" content="Simple interactable portfolio"/>
+</svelte:head>
+
 <div class="profile-page"
      in:fade={{ duration: 300, delay: 300 }}
      out:fade={{ duration: 300 }}>
