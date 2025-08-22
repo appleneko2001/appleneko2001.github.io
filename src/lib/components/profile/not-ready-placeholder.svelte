@@ -5,8 +5,8 @@
 
 <style>
     .page-not-ready {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 80vh;
         font-size: 1.5em;
 
         align-content: center;
