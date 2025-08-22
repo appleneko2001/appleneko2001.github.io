@@ -33,6 +33,10 @@
         <ProfileEntry icon="pwa" text="Apps" expanded={true} hint={null}
                       href="/apps"/>
     </div>
+
+    <div class="footer-area">
+        Powered by <a href="https://svelte.dev">SvelteKit</a> × <a href="https://workers.cloudflare.com">Cloudflare Worker</a>
+    </div>
 </div>
 
 <style>
@@ -51,6 +55,12 @@
         flex-flow: wrap;
         align-content: center;
         gap: 1rem;
+    }
+
+    .footer-area {
+        position: absolute;
+        bottom: 0;
+        margin: 16px 8px;
     }
 
     @media screen and (width < 600px) {
