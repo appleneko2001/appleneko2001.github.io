@@ -11,8 +11,9 @@
     <ProfileAvatar src="https://avatars.githubusercontent.com/u/38249047"/>
 
     <div class="entries">
-        <ProfileEntry icon="x" text="Twitter (formerly X)"
-                      href="https://twitter.com/appleneko2001"/>
+
+<!--        <ProfileEntry icon="x" text="Twitter (formerly X)"-->
+<!--                      href="https://twitter.com/appleneko2001"/>-->
         <ProfileEntry icon="discord" text="Discord"
                       href="https://discord.com/users/499588722174459914"/>
         <ProfileEntry icon="bluesky" text="Bluesky"
