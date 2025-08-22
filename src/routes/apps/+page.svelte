@@ -1,6 +1,7 @@
 <script>
     import { fly } from 'svelte/transition'
 
+    import NotReadyPlaceholder from '$lib/components/profile/not-ready-placeholder.svelte';
     import LinkButton from "$lib/components/link-button.svelte";
 </script>
 
@@ -11,6 +12,8 @@
         <LinkButton icon="arrow-left" href="/home" />
         <div class="header-text">Apps</div>
     </div>
+
+    <NotReadyPlaceholder/>
 </div>
 
 <style>
