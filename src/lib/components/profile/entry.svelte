@@ -2,10 +2,13 @@
     import "$lib/themes/theming.css";
 
     // icon provider: simple-icons
-    let { icon, text = "text", href } = $props();
+    let { icon, text = "text", href, expanded = false, hint = text } = $props();
 </script>
 
-<a class="profile-button" href={href}>
+<a class="profile-button"
+   class:expanded={expanded}
+   title={hint}
+   href={href}>
     <!-- {@render icon?.()} -->
     {#if icon}
         <div class="icon"
@@ -43,17 +46,18 @@
     }
 
     .profile-button > .text {
-        max-width: 0;
         overflow: hidden;
         white-space: nowrap;
-        transition: max-width 0.25s linear;
         font-size: 1.2em;
-        /*transition: width 0.25s ease-in-out,
-                    background-color 0.25s ease-in-out;*/
     }
 
     .profile-button > .text > span {
         margin-left: 8px;
+    }
+
+    .profile-button:not(.expanded) > .text {
+        max-width: 0;
+        transition: max-width 0.25s linear;
     }
 
     .profile-button:focus,
@@ -61,7 +65,7 @@
     {
         border: var(--foreground-colour) 2px solid;
 
-        > .text{
+        :not(.expanded) > .text{
             max-width: 100%;
         }
     }

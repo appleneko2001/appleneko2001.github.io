@@ -21,7 +21,7 @@
                       href="https://github.com/appleneko2001"/>
         <ProfileEntry icon="osu" text="osu!"
                       href="https://osu.ppy.sh/users/11455502"/>
-        <ProfileEntry icon="pwa" text="Apps"
+        <ProfileEntry icon="pwa" text="Apps" expanded={true} hint={null}
                       href="/apps"/>
     </div>
 </div>
@@ -37,11 +37,16 @@
     }
 
     .entries {
-        max-width: 390px;
         display: flex;
         justify-content: center;
         flex-flow: wrap;
         align-content: center;
         gap: 1rem;
+    }
+
+    @media screen and (width < 600px) {
+        .entries {
+            max-width: 390px;
+        }
     }
 </style>
