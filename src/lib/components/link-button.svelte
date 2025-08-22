@@ -2,7 +2,7 @@
     import "$lib/themes/theming.css";
 
     // icon provider: feather-icons
-    let { icon, text = null, href } = $props();
+    let {icon, text = null, href} = $props();
 </script>
 
 <a class="link-button" href={href}>
@@ -25,7 +25,7 @@
         color: var(--foreground-colour);
     }
 
-    .link-button{
+    .link-button {
         display: flex;
         flex-wrap: nowrap;
         padding: 8px;
@@ -36,7 +36,7 @@
         transition: all 0.25s linear;
     }
 
-    .link-button > .icon{
+    .link-button > .icon {
         width: 32px;
         height: 32px;
         background: var(--foreground-colour);
@@ -44,8 +44,7 @@
     }
 
     .link-button:focus,
-    .link-button:hover
-    {
+    .link-button:hover {
         border: var(--foreground-colour) 2px solid;
     }
 </style>

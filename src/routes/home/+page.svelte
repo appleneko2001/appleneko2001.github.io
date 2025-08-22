@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fade } from 'svelte/transition'
+    import {fade} from 'svelte/transition'
     import ProfileEntry from "$lib/components/profile/entry.svelte";
     import ProfileAvatar from "$lib/components/profile/avatar.svelte";
     //import avatar from "$lib/assets/avatar.jpg";
@@ -17,8 +17,8 @@
 
     <div class="entries">
 
-<!--        <ProfileEntry icon="x" text="Twitter (formerly X)"-->
-<!--                      href="https://twitter.com/appleneko2001"/>-->
+        <!--        <ProfileEntry icon="x" text="Twitter (formerly X)"-->
+        <!--                      href="https://twitter.com/appleneko2001"/>-->
         <ProfileEntry icon="discord" text="Discord"
                       href="https://discord.com/users/499588722174459914"/>
         <ProfileEntry icon="bluesky" text="Bluesky"
@@ -35,7 +35,8 @@
     </div>
 
     <div class="footer-area">
-        Powered by <a href="https://svelte.dev">SvelteKit</a> × <a href="https://workers.cloudflare.com">Cloudflare Worker</a>
+        Powered by <a href="https://svelte.dev">SvelteKit</a> × <a href="https://workers.cloudflare.com">Cloudflare
+        Worker</a>
     </div>
 </div>
 

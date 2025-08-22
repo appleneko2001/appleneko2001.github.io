@@ -1,35 +1,34 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
-	import "$lib/themes/theming.css";
+    import favicon from '$lib/assets/favicon.svg';
+    import "$lib/themes/theming.css";
 
-	let { children } = $props();
+    let {children} = $props();
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+    <link rel="icon" href={favicon}/>
 </svelte:head>
 
 <div class="app-layout">
-	<div class="app-page-host">
-		{@render children?.()}
-	</div>
+    <div class="app-page-host">
+        {@render children?.()}
+    </div>
 </div>
 
 <style>
-	.app-layout {
-		background-color: var(--background-colour);
-	}
+    .app-layout {
+        background-color: var(--background-colour);
+    }
 
-	:root{
-		font-family: Roboto, sans-serif;
-	}
+    :root {
+        font-family: Roboto, sans-serif;
+    }
 
-	@media screen and (width > 1000px)
-	{
-		.app-page-host{
-			margin-left: auto;
-			margin-right: auto;
-			max-width: 1000px;
-		}
-	}
+    @media screen and (width > 1000px) {
+        .app-page-host {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1000px;
+        }
+    }
 </style>

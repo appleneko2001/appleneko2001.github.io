@@ -2,7 +2,19 @@
     import "$lib/themes/theming.css";
 
     // icon provider: simple-icons
-    let { icon, text = "text", href, expanded = false, hint = text } : {icon?: any, text?: string, href?: string, expanded?: boolean, hint?: string | null } = $props();
+    let {
+        icon,
+        text = "text",
+        href,
+        expanded = false,
+        hint = text
+    }: {
+        icon?: any,
+        text?: string,
+        href?: string,
+        expanded?: boolean,
+        hint?: string | null
+    } = $props();
 </script>
 
 <a class="profile-button"
@@ -14,7 +26,7 @@
         <div class="icon"
              style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
     {/if}
-    
+
     <span class="text">
         <span>{text}</span>
     </span>
@@ -26,7 +38,7 @@
         color: var(--foreground-colour);
     }
 
-    .profile-button{
+    .profile-button {
         display: flex;
         flex-wrap: nowrap;
         position: relative;
@@ -38,7 +50,7 @@
         transition: all 0.25s linear;
     }
 
-    .profile-button > .icon{
+    .profile-button > .icon {
         width: 32px;
         height: 32px;
         background: var(--foreground-colour);
@@ -60,13 +72,11 @@
         transition: max-width 0.25s linear;
     }
 
-    .profile-button:focus, .profile-button:hover
-    {
+    .profile-button:focus, .profile-button:hover {
         border: var(--foreground-colour) 2px solid;
     }
 
-    .profile-button:not(.expanded):focus, .profile-button:not(.expanded):hover
-    {
+    .profile-button:not(.expanded):focus, .profile-button:not(.expanded):hover {
         .text {
             max-width: 200px;
         }
