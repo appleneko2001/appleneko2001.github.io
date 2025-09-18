@@ -11,7 +11,7 @@
 </svelte:head>
 
 <div class="profile-page"
-     in:fade={{ duration: 300, delay: 300 }}
+     in:fade={{ duration: 300, delay: 100 }}
      out:fade={{ duration: 300 }}>
     <ProfileAvatar src="https://avatars.githubusercontent.com/u/38249047"/>
 
