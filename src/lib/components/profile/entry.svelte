@@ -32,13 +32,9 @@
      class:focused={focused}
      onpointerover={onPointerOver}
      onpointerleave={onPointerLeave}
-     onfocusin={onPointerOver}
-     onfocusout={onPointerLeave}
 >
     <a title={hint}
        href={href}
-       onpointerover={onPointerOver}
-       onpointerleave={onPointerLeave}
        onfocusin={onPointerOver}
        onfocusout={onPointerLeave}
     >
