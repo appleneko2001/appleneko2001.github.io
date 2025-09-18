@@ -34,10 +34,14 @@
      onpointerleave={onPointerLeave}
      onfocusin={onPointerOver}
      onfocusout={onPointerLeave}
-     tabindex="0"
 >
     <a title={hint}
-       href={href}>
+       href={href}
+       onpointerover={onPointerOver}
+       onpointerleave={onPointerLeave}
+       onfocusin={onPointerOver}
+       onfocusout={onPointerLeave}
+    >
         <!-- {@render icon?.()} -->
         {#if icon}
             <div class="icon"
@@ -102,7 +106,7 @@
         }
     }
 
-    .profile-button.focused{
+    .profile-button.focused, .profile-button.expanded {
         a {
             pointer-events: initial;
         }
