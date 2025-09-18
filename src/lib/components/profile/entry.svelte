@@ -156,6 +156,10 @@
         margin-left: 8px;
     }
 
+    .text > span:empty {
+        display: none;
+    }
+
     .profile-button.focused {
         border: var(--foreground-colour) 2px solid;
     }
