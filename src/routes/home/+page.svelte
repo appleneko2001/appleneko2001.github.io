@@ -37,6 +37,9 @@
     <div class="entries">
         <ProfileEntry icon="pwa" text="Apps" expanded={true} hint={null}
                       href="/apps"/>
+
+        <ProfileEntry icon="devbox" text="Projects" expanded={true} hint={null}
+                      href="/projects"/>
     </div>
 
     <div class="footer-area">

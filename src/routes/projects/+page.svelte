@@ -33,6 +33,7 @@
     }
 
     .page-header {
+        position: sticky;
         display: flex;
         align-items: center;
         gap: 1.5em;

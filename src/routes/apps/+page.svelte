@@ -29,11 +29,11 @@
 
 <style>
     .apps-page {
-        position: sticky;
         min-height: max(560px, 100vh);
     }
 
     .page-header {
+        position: sticky;
         display: flex;
         align-items: center;
         gap: 1.5em;
