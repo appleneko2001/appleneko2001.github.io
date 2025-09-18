@@ -18,6 +18,7 @@
         hint?: string | null
     } = $props();
 
+    const isIconSrc = typeof icon === "string" ? icon.includes("://") : false;
     const the_text = text;
     text = "";
 
@@ -112,8 +113,14 @@
    onclick={onClick}>
     <!-- {@render icon?.()} -->
     {#if icon}
-        <div class="icon"
-             style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
+        {#if isIconSrc}
+            <div class="icon"
+                 style="mask-image: url({icon})"></div>
+        {:else}
+            <div class="icon"
+                 style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
+        {/if}
+
     {/if}
 
     <span class="text">
