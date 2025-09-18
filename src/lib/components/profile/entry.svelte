@@ -7,20 +7,37 @@
         text = "text",
         href,
         expanded = false,
+        focused = false,
         hint = text
     }: {
         icon?: any,
         text?: string,
         href?: string,
         expanded?: boolean,
+        focused: boolean,
         hint?: string | null
     } = $props();
+
+    function onPointerOver(){
+        focused = true;
+    }
+
+    function onPointerLeave(){
+        focused = false;
+    }
 </script>
 
 <a class="profile-button"
    class:expanded={expanded}
+   class:focused={focused}
    title={hint}
-   href={href}>
+   href={focused ? href : null}
+   onpointerover={onPointerOver}
+   onpointerleave={onPointerLeave}
+   onfocusin={onPointerOver}
+   onfocusout={onPointerLeave}
+   tabindex="0"
+>
     <!-- {@render icon?.()} -->
     {#if icon}
         <div class="icon"
@@ -72,11 +89,11 @@
         transition: max-width 0.25s linear;
     }
 
-    .profile-button:focus, .profile-button:hover {
+    .profile-button.focused {
         border: var(--foreground-colour) 2px solid;
     }
 
-    .profile-button:not(.expanded):focus, .profile-button:not(.expanded):hover {
+    .profile-button:not(.expanded).focused {
         .text {
             max-width: 200px;
         }
