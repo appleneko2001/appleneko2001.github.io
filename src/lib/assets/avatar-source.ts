@@ -1,0 +1,1 @@
+export const AvatarSourceUrl: string = "https://avatars.githubusercontent.com/u/38249047";

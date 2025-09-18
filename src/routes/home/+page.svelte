@@ -2,18 +2,23 @@
     import {fade} from 'svelte/transition'
     import ProfileEntry from "$lib/components/profile/entry.svelte";
     import ProfileAvatar from "$lib/components/profile/avatar.svelte";
-    //import avatar from "$lib/assets/avatar.jpg";
+    import {AvatarSourceUrl} from "$lib/assets/avatar-source";
 </script>
 
 <svelte:head>
     <title>Portfolio</title>
-    <meta name="description" content="Simple interactable portfolio"/>
+    <meta name="description" content="My simple portfolio webpage 🫠"/>
+    <meta property="og:description" content="My simple portfolio webpage 🫠"/>
+    <meta property="og:title" content="Portfolio"/>
+    <meta property="og:type" content="profile"/>
+    <meta property="og:profile:username" content="appleneko2001"/>
+    <meta property="og:image" content={AvatarSourceUrl}/>
 </svelte:head>
 
 <div class="profile-page"
      in:fade={{ duration: 300, delay: 100 }}
      out:fade={{ duration: 300 }}>
-    <ProfileAvatar src="https://avatars.githubusercontent.com/u/38249047"/>
+    <ProfileAvatar src={AvatarSourceUrl}/>
 
     <div class="entries">
 

@@ -3,11 +3,17 @@
 
     import NotReadyPlaceholder from '$lib/components/profile/not-ready-placeholder.svelte';
     import LinkButton from "$lib/components/link-button.svelte";
+    import {AvatarSourceUrl} from "$lib/assets/avatar-source"
 </script>
 
 <svelte:head>
     <title>Apps</title>
     <meta name="description" content="my PWA apps"/>
+    <meta property="og:description" content="my PWA apps and tools listing 🫠"/>
+    <meta property="og:title" content="Portfolio"/>
+    <meta property="og:type" content="profile"/>
+    <meta property="og:profile:username" content="appleneko2001"/>
+    <meta property="og:image" content={AvatarSourceUrl}/>
 </svelte:head>
 
 <div class="apps-page"
