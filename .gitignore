@@ -1,4 +1,6 @@
 node_modules
+package-lock.json
+.idea
 
 # Output
 .output
@@ -21,5 +23,3 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-package-lock.json
