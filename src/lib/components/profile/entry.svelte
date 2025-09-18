@@ -18,26 +18,98 @@
         hint?: string | null
     } = $props();
 
+    const the_text = text;
+    text = "";
+
+    const ongoingTimeouts: number[] = [];
+    const ongoingIntervals: number[] = [];
+
     function onPointerOver(){
-        focused = true;
+        const key = setTimeout(() => {
+            focused = true;
+            let item : number | undefined;
+            while ((item = ongoingTimeouts.pop()) != undefined){
+                clearTimeout(item);
+            }
+        }, 50);
+        ongoingTimeouts.push(key);
+
+        startTextAnimation();
     }
 
     function onPointerLeave(){
+        let item : number | undefined;
+        while ((item = ongoingTimeouts.pop()) != undefined){
+            clearTimeout(item);
+        }
         focused = false;
+
+        startTextAnimation(true);
     }
+
+    function onClick(e : UIEvent){
+        if(!focused && expanded !== true)
+            e.preventDefault();
+    }
+
+    let anim_reverse = false;
+    let progress : number = 0;
+
+    startTextAnimation(true);
+
+    function startTextAnimation(reverse: boolean = false){
+        if(expanded)
+        {
+            text = the_text;
+            return;
+        }
+
+        const start = Date.now();
+        const durationMS = 100;
+        const durationEach = durationMS / the_text.length;
+
+        anim_reverse = reverse;
+
+        let item : number | undefined;
+        while ((item = ongoingIntervals.pop()) != undefined){
+            clearInterval(item);
+        }
+
+        const key = setInterval(() => {
+            const now = Date.now();
+            const delta = now - start;
+
+            if(delta > durationMS)
+            {
+                progress = anim_reverse ? 0 : the_text.length;
+
+                let item : number | undefined;
+                while ((item = ongoingIntervals.pop()) != undefined){
+                    clearInterval(item);
+                }
+            }
+            else
+            {
+                progress = progress + (anim_reverse ? -1 : 1);
+            }
+
+            text = the_text.slice(0, Math.min(Math.max(progress, 0), the_text.length));
+        }, durationEach);
+        ongoingIntervals.push(key);
+    }
+
 </script>
 
 <a class="profile-button"
    class:expanded={expanded}
    class:focused={focused}
    title={hint}
-   href={focused ? href : null}
-   onpointerover={onPointerOver}
-   onpointerleave={onPointerLeave}
+   href={href}
    onfocusin={onPointerOver}
    onfocusout={onPointerLeave}
-   tabindex="0"
->
+   onmouseenter={onPointerOver}
+   onmouseleave={onPointerLeave}
+   onclick={onClick}>
     <!-- {@render icon?.()} -->
     {#if icon}
         <div class="icon"
@@ -84,18 +156,7 @@
         margin-left: 8px;
     }
 
-    .profile-button:not(.expanded) > .text {
-        max-width: 0;
-        transition: max-width 0.25s linear;
-    }
-
     .profile-button.focused {
         border: var(--foreground-colour) 2px solid;
-    }
-
-    .profile-button:not(.expanded).focused {
-        .text {
-            max-width: 200px;
-        }
     }
 </style>
