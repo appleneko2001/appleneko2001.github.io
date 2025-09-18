@@ -14,7 +14,7 @@
         text?: string,
         href?: string,
         expanded?: boolean,
-        focused: boolean,
+        focused?: boolean,
         hint?: string | null
     } = $props();
 

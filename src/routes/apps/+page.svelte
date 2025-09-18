@@ -11,7 +11,7 @@
 </svelte:head>
 
 <div class="apps-page"
-     in:fly={{ x: 200, duration: 300, delay: 300 }}
+     in:fly={{ x: 200, duration: 300, delay: 100 }}
      out:fly={{ x: 200, duration: 300 }}>
     <div class="page-header">
         <LinkButton icon="arrow-left" href="/home"/>
