@@ -27,67 +27,64 @@
     }
 </script>
 
-<div class="profile-button"
-     class:expanded={expanded}
-     class:focused={focused}
-     onpointerover={onPointerOver}
-     onpointerleave={onPointerLeave}
+<a class="profile-button"
+   class:expanded={expanded}
+   class:focused={focused}
+   title={hint}
+   href={focused ? href : null}
+   onpointerover={onPointerOver}
+   onpointerleave={onPointerLeave}
+   onfocusin={onPointerOver}
+   onfocusout={onPointerLeave}
+   tabindex="0"
 >
-    <a title={hint}
-       href={href}
-       onfocusin={onPointerOver}
-       onfocusout={onPointerLeave}
-    >
-        <!-- {@render icon?.()} -->
-        {#if icon}
-            <div class="icon"
-                 style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
-        {/if}
+    <!-- {@render icon?.()} -->
+    {#if icon}
+        <div class="icon"
+             style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
+    {/if}
 
-        <span class="text">
+    <span class="text">
         <span>{text}</span>
     </span>
-    </a>
-</div>
+</a>
 
 <style>
     a {
         text-decoration: none;
-        pointer-events: none;
         color: var(--foreground-colour);
-
-        display: flex;
-        flex-wrap: nowrap;
-        position: relative;
-        align-items: center;
     }
 
     .profile-button {
+        display: flex;
+        flex-wrap: nowrap;
+        position: relative;
         padding: 8px;
+        align-items: center;
+
         border: transparent 2px solid;
         border-radius: 8px;
         transition: all 0.25s linear;
     }
 
-    .profile-button > a > .icon {
+    .profile-button > .icon {
         width: 32px;
         height: 32px;
         background: var(--foreground-colour);
         mask-size: cover;
     }
 
-    .profile-button > a > .text {
+    .profile-button > .text {
         overflow: hidden;
         white-space: nowrap;
         font-size: 1.2em;
-        display: block;
     }
 
-    .profile-button > a > .text > span {
+    .profile-button > .text > span {
         margin-left: 8px;
     }
 
-    .profile-button:not(.expanded) > a > .text {
+    .profile-button:not(.expanded) > .text {
         max-width: 0;
         transition: max-width 0.25s linear;
     }
@@ -99,12 +96,6 @@
     .profile-button:not(.expanded).focused {
         .text {
             max-width: 200px;
-        }
-    }
-
-    .profile-button.focused, .profile-button.expanded {
-        a {
-            pointer-events: initial;
         }
     }
 </style>
