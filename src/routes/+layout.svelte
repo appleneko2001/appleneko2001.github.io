@@ -34,9 +34,9 @@
     </div>
 </div>
 
-<button onclick={clicked}
+<!--<button onclick={clicked}
         style="z-index: 1; position: fixed; bottom: 0; left: 50%">Hello
-</button>
+</button>-->
 
 <ModalHost bind:this={modalHost}
            bind:isForeground={isModalFront}
