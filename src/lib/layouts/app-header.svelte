@@ -7,7 +7,7 @@
 </div>
 
 <style>
-    .app-header{
+    .app-header {
         position: sticky;
         top: 0;
     }

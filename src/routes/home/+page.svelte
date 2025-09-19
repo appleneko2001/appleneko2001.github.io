@@ -20,19 +20,22 @@
      out:fade={{ duration: 300 }}>
     <ProfileAvatar src={AvatarSourceUrl}/>
 
+    <br/>
+
     <div class="entries">
 
         <!--        <ProfileEntry icon="x" text="Twitter (formerly X)"-->
         <!--                      href="https://twitter.com/appleneko2001"/>-->
-        <ProfileEntry icon="discord" text="Discord"
+        <ProfileEntry icon="discord" text="Discord" showLoading={true}
                       href="https://discord.com/users/499588722174459914"/>
-        <ProfileEntry icon="bluesky" text="Bluesky"
+        <ProfileEntry icon="bluesky" text="Bluesky" showLoading={true}
                       href="https://appleneko2001.bsky.social"/>
-        <ProfileEntry icon="github" text="GitHub"
+        <ProfileEntry icon="github" text="GitHub" showLoading={true}
                       href="https://github.com/appleneko2001"/>
-        <ProfileEntry icon="osu" text="osu!"
+        <ProfileEntry icon="osu" text="osu!" showLoading={true}
                       href="https://osu.ppy.sh/users/11455502"/>
     </div>
+
 
     <div class="entries">
         <ProfileEntry icon="pwa" text="Apps" expanded={true} hint={null}
@@ -55,7 +58,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 32px;
+        gap: 16px;
     }
 
     .entries {

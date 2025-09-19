@@ -20,7 +20,7 @@
      in:fly={{ x: 200, duration: 300, delay: 100 }}
      out:fly={{ x: 200, duration: 300 }}>
     <div class="page-header">
-        <LinkButton icon="arrow-left" href="/home"/>
+        <LinkButton icon="material:arrow_back" href="/home"/>
         <div class="header-text">Projects</div>
     </div>
 

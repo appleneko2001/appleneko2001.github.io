@@ -1,13 +1,13 @@
 <script>
     import {fly} from 'svelte/transition'
-    import { page } from '$app/state';
+    import {page} from '$app/state';
 
     import ProfileEntry from "$lib/components/profile/entry.svelte";
 
     let title = "Error!";
     let msg = page.error?.message ?? "Nothing to say ?!";
 
-    switch (page.status){
+    switch (page.status) {
         case 403:
             msg = "No! You can't do that!!!";
             break;
@@ -32,7 +32,7 @@
         <div class="card-header">{title}</div>
         <div class="card-text">{msg}</div>
 
-        <ProfileEntry icon="https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/home.svg" text="Go home" expanded={true} hint={null}
+        <ProfileEntry icon="material:home" text="Go home" expanded={true} hint={null}
                       href="/"/>
     </div>
 </div>
@@ -44,12 +44,12 @@
         flex-direction: column;
     }
 
-    .card{
+    .card {
         margin: auto;
         padding: 16px 8px;
         border-radius: 8px;
         background-color: var(--card-background-colour);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.23);
+        box-shadow: var(--card-shadow);
 
         display: flex;
         flex-direction: column;

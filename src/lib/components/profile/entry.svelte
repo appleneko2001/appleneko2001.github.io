@@ -1,104 +1,69 @@
 <script lang="ts">
     import "$lib/themes/theming.css";
+    import IconSource from "../icon-source.svelte";
+    import AnimTypingText from "../anim-typing-text.svelte";
+    import ModalHost from '$lib/components/modals/modal-host.svelte';
+    import ModalLoading from '$lib/layouts/modal-loading.svelte';
+    import {GlobalVars} from "$lib/global-accessor";
 
-    // icon provider: simple-icons
     let {
         icon,
         text = "text",
         href,
         expanded = false,
         focused = false,
-        hint = text
+        hint = text,
+        showLoading = false,
     }: {
         icon?: any,
         text?: string,
         href?: string,
         expanded?: boolean,
         focused?: boolean,
-        hint?: string | null
+        hint?: string | null,
+        showLoading?: boolean,
     } = $props();
 
-    const isIconSrc = typeof icon === "string" ? icon.includes("://") : false;
-    const the_text = text;
-    text = "";
+    let txt: AnimTypingText | null = null;
 
     const ongoingTimeouts: number[] = [];
-    const ongoingIntervals: number[] = [];
 
-    function onPointerOver(){
+    function onPointerOver() {
         const key = setTimeout(() => {
             focused = true;
-            let item : number | undefined;
-            while ((item = ongoingTimeouts.pop()) != undefined){
+            let item: number | undefined;
+            while ((item = ongoingTimeouts.pop()) != undefined) {
                 clearTimeout(item);
             }
         }, 50);
         ongoingTimeouts.push(key);
 
-        startTextAnimation();
+        txt?.startTextAnimation();
     }
 
-    function onPointerLeave(){
-        let item : number | undefined;
-        while ((item = ongoingTimeouts.pop()) != undefined){
+    function onPointerLeave() {
+        let item: number | undefined;
+        while ((item = ongoingTimeouts.pop()) != undefined) {
             clearTimeout(item);
         }
         focused = false;
 
-        startTextAnimation(true);
+        txt?.startTextAnimation(true);
     }
 
-    function onClick(e : UIEvent){
-        if(!focused && expanded !== true)
-            e.preventDefault();
-    }
-
-    let anim_reverse = false;
-    let progress : number = 0;
-
-    startTextAnimation(true);
-
-    function startTextAnimation(reverse: boolean = false){
-        if(expanded)
+    function onClick(e: UIEvent) {
+        if (!focused && expanded !== true)
         {
-            text = the_text;
+            e.preventDefault();
             return;
         }
 
-        const start = Date.now();
-        const durationMS = 100;
-        const durationEach = durationMS / the_text.length;
+        if(!showLoading)
+            return;
 
-        anim_reverse = reverse;
-
-        let item : number | undefined;
-        while ((item = ongoingIntervals.pop()) != undefined){
-            clearInterval(item);
-        }
-
-        const key = setInterval(() => {
-            const now = Date.now();
-            const delta = now - start;
-
-            if(delta > durationMS)
-            {
-                progress = anim_reverse ? 0 : the_text.length;
-
-                let item : number | undefined;
-                while ((item = ongoingIntervals.pop()) != undefined){
-                    clearInterval(item);
-                }
-            }
-            else
-            {
-                progress = progress + (anim_reverse ? -1 : 1);
-            }
-
-            text = the_text.slice(0, Math.min(Math.max(progress, 0), the_text.length));
-        }, durationEach);
-        ongoingIntervals.push(key);
+        const host = GlobalVars.get("ModalHost") as ModalHost;
+        host?.showModal(ModalLoading, undefined, false);
     }
-
 </script>
 
 <a class="profile-button"
@@ -112,19 +77,13 @@
    onmouseleave={onPointerLeave}
    onclick={onClick}>
     <!-- {@render icon?.()} -->
-    {#if icon}
-        {#if isIconSrc}
-            <div class="icon"
-                 style="mask-image: url({icon})"></div>
-        {:else}
-            <div class="icon"
-                 style="mask-image: url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/{icon}.svg)"></div>
-        {/if}
-
-    {/if}
+    <IconSource icon={icon} size="32"/>
 
     <span class="text">
-        <span>{text}</span>
+        <AnimTypingText bind:this={txt}
+                        text={text}
+                        disabled={expanded}
+                        duration={100}/>
     </span>
 </a>
 
@@ -146,24 +105,17 @@
         transition: all 0.25s linear;
     }
 
-    .profile-button > .icon {
-        width: 32px;
-        height: 32px;
-        background: var(--foreground-colour);
-        mask-size: cover;
-    }
-
     .profile-button > .text {
         overflow: hidden;
         white-space: nowrap;
         font-size: 1.2em;
     }
 
-    .profile-button > .text > span {
+    .profile-button > .text :global(span) {
         margin-left: 8px;
     }
 
-    .text > span:empty {
+    .text :global(span:empty) {
         display: none;
     }
 
