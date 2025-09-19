@@ -1,13 +1,16 @@
 <script lang="ts">
     import AnimTypingText from "$lib/components/anim-typing-text.svelte";
+    import Button from "$lib/components/button.svelte";
     import {onMount} from "svelte";
+
+    let { cancel } = $props();
 
     let txt: AnimTypingText;
 
     let stage = 0;
 
-    export function setCloseModalCallback(fn: Function): void {
-        // todo
+    function clickCancel() {
+        cancel();
     }
 
     onMount(() => {
@@ -22,26 +25,40 @@
         }
 
         txt.setPlayEndCallback(() => {
-            if (stage < 4)
+            if (stage < 3)
                 stage++;
 
             else
             {
-                return false;
             }
         })
     }, 4);
 </script>
 
 <div>
-    <AnimTypingText bind:this={txt} duration={1000}
-                    text="..."
-                    repeat={true}
-                    playForwardOnLoad={true}/>
+    <div class="indicator">
+        <AnimTypingText bind:this={txt} duration={1000}
+                        text="..."
+                        repeat={true}
+                        playForwardOnLoad={true}/>
+    </div>
+
+    {#if cancel !== undefined}
+        <Button click={clickCancel}
+                icon={undefined}
+                text="Cancel"
+                props={{}}/>
+    {/if}
 </div>
 
 <style>
+    .indicator {
+        min-height: 24px;
+    }
+
     div {
         margin: auto;
+        display: flex;
+        flex-direction: column;
     }
 </style>

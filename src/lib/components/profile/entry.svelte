@@ -61,8 +61,29 @@
         if(!showLoading)
             return;
 
+        function closeModalWeakRef(){
+            window.stop();
+            closeModal?.();
+        }
+
+        let closeModal: Function;
+
         const host = GlobalVars.get("ModalHost") as ModalHost;
-        host?.showModal(ModalLoading, undefined, false);
+        host?.showModal(ModalLoading, { cancel: closeModalWeakRef },
+            {
+                header: null, isUserCloseable: false,
+                onshow: (_, close) => {closeModal = close;}
+            });
+
+        window.onabort = () => closeModal?.();
+        window.onpagehide = () => closeModal?.();
+
+        const cancelLoad = function() {
+            window.onbeforeunload = () => closeModal?.();
+            document.removeEventListener("DOMContentLoaded", cancelLoad);
+        }
+
+        document.addEventListener("DOMContentLoaded", cancelLoad);
     }
 </script>
 

@@ -5,10 +5,10 @@
     import type {Component, Snippet} from 'svelte';
     import IconButton from '../icon-button.svelte';
 
-    let {children, close, header, isUserCloseable} = $props();
+    let {children, close, header, isUserCloseable, properties} = $props();
     let mode = "";
     let MyComponent = $state<Component | null>(null);
-    let params = $state<Record<string, any>>({});
+    let params = $state<Record<string, any>>(properties);
 
     if (typeof children === "string")
         mode = "string";

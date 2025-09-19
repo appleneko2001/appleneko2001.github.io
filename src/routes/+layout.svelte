@@ -14,7 +14,7 @@
 
     function clicked() {
         console.log("clicked hello!");
-        modalHost?.showModal(ModalLoading, undefined, false);
+        modalHost?.showModal(ModalLoading);
     }
 
     onMount(() => {

@@ -2,7 +2,7 @@
     import type {Attachment} from "svelte/attachments";
     import {createAttachmentKey} from 'svelte/attachments';
     import ModalView from "./modal-view.svelte";
-    import {mount, unmount} from "svelte";
+    import { mount, unmount} from "svelte";
 
     const modals = $state<any[]>([]);
 
@@ -16,19 +16,28 @@
 
     }
 
-    export async function showModal(objects: any,
-                                    header?: string | undefined,
-                                    isUserCloseable?: boolean | undefined,
-                                    onshow?: Function | undefined) {
-        switch (typeof objects) {
+    export async function showModal(
+        modal: string | {},
+        modalProps: any = undefined,
+        {
+            header = "Modal!",
+            isUserCloseable = true,
+            onshow = undefined
+        } : {
+            header?: string | null | undefined,
+            isUserCloseable?: boolean | undefined,
+            onshow?: (view: any, closeModal: Function) => void | undefined
+        } = {})
+    {
+        switch (typeof modal) {
             case "undefined":
                 return;
         }
 
-        if (objects === null)
+        if (modal === null)
             return;
 
-        modals.push({ modal: objects, header, isUserCloseable, onshow });
+        modals.push({ modal, modalProps, header, isUserCloseable, onshow });
     }
 
     const attachment: Attachment = (hostElement) => {
@@ -39,7 +48,7 @@
         if (queue === undefined)
             return;
 
-        const {modal, onshow, header, isUserCloseable} = queue;
+        const {modal, modalProps, onshow, header, isUserCloseable} = queue;
 
         const key = Date.now();
 
@@ -56,7 +65,7 @@
                 isForeground = false;
         }
 
-        const view = mount(ModalView, {target: modalHost, props: {children: modal, header, isUserCloseable, close: close}});
+        const view = mount(ModalView, {target: modalHost, props: {children: modal, header, isUserCloseable, close, properties: modalProps}});
         openedModals.set(key, view);
 
         onshow?.(view, close);
