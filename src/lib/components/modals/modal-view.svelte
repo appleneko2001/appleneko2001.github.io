@@ -2,10 +2,11 @@
     import {scale} from 'svelte/transition';
     import 'svelte/easing';
     import {backOut, linear} from "svelte/easing";
-    import type {Component, Snippet} from 'svelte';
+    import {type Component, onMount, type Snippet} from 'svelte';
     import IconButton from '../icon-button.svelte';
+    import * as focusTrap from 'focus-trap';
 
-    let {children, close, header, isUserCloseable, properties, dialogProps} = $props();
+    let {children, close, header, isUserCloseable, isFullScreen, properties, dialogProps} = $props();
     let mode = "";
     let MyComponent = $state<Component | null>(null);
     let params = $state<Record<string, any>>(properties);
@@ -27,10 +28,28 @@
 
         close?.();
     }
+
+    let modalView: any;
+
+    onMount(() => {
+
+        const view = modalView as Element;
+        console.log(view);
+        if(view == null){
+            return;
+        }
+
+        const trap = focusTrap.createFocusTrap(modalView);
+        trap.activate();
+
+        return trap.deactivate;
+    })
 </script>
 
 
 <div class="modal-view"
+     class:full-screen={isFullScreen}
+     bind:this={modalView}
      in:scale={{easing: backOut, duration: 200}}
      out:scale={{easing: linear, duration: 200}}
      {...dialogProps}>
@@ -60,6 +79,10 @@
         border-radius: 8px;
         background-color: var(--card-background-colour);
         box-shadow: var(--card-shadow);
+    }
+
+    .modal-view:not(.full-screen) {
+        margin: 24px;
     }
 
     .modal-layout {

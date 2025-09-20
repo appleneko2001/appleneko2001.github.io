@@ -1,11 +1,17 @@
 <script lang="ts">
-    let {icon, size} = $props();
+    import { type IconProps } from "$lib/components/icon-props";
+
+    let {
+        icon,
+        size = 24,
+        fill = "var(--foreground-colour)"
+    } : IconProps = $props();
 
     const isIconSrc = typeof icon === "string" ? icon.includes("://") : false;
 
-    let finalUrl = icon;
+    let finalUrl : string = icon;
 
-    function getIconUrl(src: string, name: string) {
+    function getIconUrl(src: string, name: string) : string {
         switch (src) {
             case "material":
                 return "https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/" + name + ".svg";
@@ -15,6 +21,7 @@
 
             default:
                 console.error(`Unknown type ${src}, ${name}`);
+                return "";
         }
     }
 
@@ -31,14 +38,15 @@
 
 {#if icon}
     <div class="icon"
-         style="--size: {size}px; mask-image: url({finalUrl})"></div>
+         style="--size: {size}px; mask-image: url({finalUrl}); background: {fill}"></div>
 {/if}
 
 <style>
     .icon {
+        min-width: var(--size);
+        min-height: var(--size);
         width: var(--size);
         height: var(--size);
-        background: var(--foreground-colour);
         mask-size: cover;
     }
 </style>

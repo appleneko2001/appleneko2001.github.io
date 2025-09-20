@@ -106,7 +106,7 @@
    onmouseleave={onPointerLeave}
    onclick={onClick}>
     <!-- {@render icon?.()} -->
-    <IconSource icon={icon} size="32"/>
+    <IconSource icon={icon} size={32}/>
 
     <span class="text">
         <AnimTypingText bind:this={txt}

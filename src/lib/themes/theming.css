@@ -3,7 +3,7 @@
     --background-colour: #fff;
 
     --card-background-colour: #fff;
-    --card-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 16px 32px 4px rgba(0, 0, 0, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {

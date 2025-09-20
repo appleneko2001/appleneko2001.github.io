@@ -1,6 +1,6 @@
 <script lang="ts">
     import AnimTypingText from "$lib/components/anim-typing-text.svelte";
-    import Button from "$lib/components/button.svelte";
+    import MyButton from "$lib/components/my-button.svelte";
     import {onMount} from "svelte";
 
     let { cancel, text } = $props();
@@ -32,10 +32,10 @@
     </div>
 
     {#if cancel !== undefined}
-        <Button click={clickCancel}
-                icon={{ icon: "material:close", size: 24 }}
-                text="Cancel"
-                props={{}}/>
+        <MyButton click={clickCancel}
+                  icon={{ icon: "material:close", size: 24 }}
+                  text="Cancel"
+                  props={{}}/>
     {/if}
 </div>
 

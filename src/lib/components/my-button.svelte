@@ -1,7 +1,18 @@
-<script>
+<script lang="ts">
     import IconSource from "./icon-source.svelte";
+    import { type IconProps } from "$lib/components/icon-props";
 
-    let {props, icon, text, click} = $props();
+    let {
+        props,
+        icon,
+        text,
+        click
+    } : {
+        props?: any,
+        icon?: IconProps,
+        text?: string;
+        click?: (ev: EventTarget) => void;
+    } = $props();
 </script>
 
 <button onclick={click} {...props}>
@@ -19,6 +30,7 @@
         position: relative;
         display: flex;
         align-items: center;
+        gap: 4px;
     }
 
     button > span {

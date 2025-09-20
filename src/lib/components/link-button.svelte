@@ -1,20 +1,50 @@
 <script lang="ts">
     import "$lib/themes/theming.css";
     import IconSource from "./icon-source.svelte";
+    import { type IconProps } from "$lib/components/icon-props";
 
-    let {icon, text = null, href} = $props();
+    let {
+        icon,
+        text,
+        href = "",
+        target,
+        children,
+        style,
+    } : {
+        icon?: IconProps | string;
+        text?: string;
+        href: string;
+        target?: string;
+        children?: any;
+        style?: any;
+    } = $props();
+
+    const iconProps = (() => {
+        if (typeof icon === "string") {
+            return {
+                icon: icon,
+            }
+        }
+
+        const props = icon as IconProps;
+        return props ?? undefined;
+    })();
 </script>
 
-<a class="link-button" href={href}>
+<a class="link-button" href={href} style={style} target={target}>
     <!-- {@render icon?.()} -->
     {#if icon}
-        <IconSource icon={icon} size="32"/>
+        <IconSource {...iconProps} />
     {/if}
 
     {#if text}
         <span class="text">
             <span>{text}</span>
         </span>
+    {/if}
+
+    {#if children}
+        {@render children()}
     {/if}
 </a>
 

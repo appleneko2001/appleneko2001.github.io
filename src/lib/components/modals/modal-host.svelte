@@ -12,8 +12,19 @@
 
     let modalHost: HTMLElement;
 
-    function tryDismissCurrentModal() {
+    function tryDismissCurrentModal(event: MouseEvent) {
+        if(openedModals.size === 0)
+            return;
 
+        if(event.target !== modalHost)
+            return;
+
+        const key = openedModals.keys().toArray().at(-1);
+
+        if(key === undefined)
+            return;
+
+        openedModals.get(key).tryClose();
     }
 
     export async function showModal(
@@ -22,11 +33,13 @@
         {
             header = "Modal!",
             isUserCloseable = true,
+            isFullScreen = false,
             onshow = undefined,
             dialogProps = undefined
         } : {
             header?: string | null | undefined,
             isUserCloseable?: boolean | undefined,
+            isFullScreen?: boolean | undefined,
             onshow?: (view: any, closeModal: Function) => void | undefined,
             dialogProps?: any
         } = {})
@@ -39,7 +52,7 @@
         if (modal === null)
             return;
 
-        modals.push({ modal, modalProps, header, isUserCloseable, onshow, dialogProps});
+        modals.push({ modal, modalProps, header, isUserCloseable, isFullScreen, onshow, dialogProps});
     }
 
     const attachment: Attachment = (hostElement) => {
@@ -50,12 +63,12 @@
         if (queue === undefined)
             return;
 
-        const {modal, modalProps, onshow, header, isUserCloseable, dialogProps} = queue;
+        const {modal, modalProps, onshow, header, isUserCloseable, isFullScreen, dialogProps} = queue;
 
         const key = Date.now();
 
         function close() {
-            const view = openedModals.get(key);
+            const { view } = openedModals.get(key);
 
             if (view === undefined)
                 return;
@@ -67,8 +80,28 @@
                 isForeground = false;
         }
 
-        const view = mount(ModalView, {target: modalHost, props: {children: modal, header, isUserCloseable, properties: modalProps, dialogProps}});
-        openedModals.set(key, view);
+        function tryClose() {
+            if(!isUserCloseable)
+                return;
+
+            close();
+        }
+
+        const view = mount(ModalView,
+            {
+                target: modalHost,
+                props:
+                {
+                    children: modal,
+                    header,
+                    isUserCloseable,
+                    isFullScreen,
+                    close,
+                    properties: modalProps,
+                    dialogProps
+                }
+            });
+        openedModals.set(key, {view, tryClose});
 
         onshow?.(view, close);
 
@@ -84,6 +117,7 @@
 <div class="modal-host"
      bind:this={modalHost}
      class:front={isForeground}
+     onpointerdown={tryDismissCurrentModal}
      {...hooks}>
 
 </div>

@@ -3,6 +3,16 @@
     import ProfileEntry from "$lib/components/profile/entry.svelte";
     import ProfileAvatar from "$lib/components/profile/avatar.svelte";
     import {AvatarSourceUrl} from "$lib/assets/avatar-source";
+    import MyButton from '$lib/components/my-button.svelte';
+    import {GlobalVars} from "$lib/global-accessor";
+    import ModalHost from '$lib/components/modals/modal-host.svelte';
+
+    import AboutWebsite from '$lib/layouts/modal-about-website.svelte';
+
+    function about(){
+        const modalHost = GlobalVars.get("ModalHost") as ModalHost;
+        modalHost.showModal(AboutWebsite, undefined, { header: "Info" });
+    }
 </script>
 
 <svelte:head>
@@ -46,8 +56,8 @@
     </div>
 
     <div class="footer-area">
-        Powered by <a href="https://svelte.dev">SvelteKit</a> × <a href="https://workers.cloudflare.com">Cloudflare
-        Worker</a>
+        <MyButton text="Info" icon={{ icon: 'material:info', size: 16 }} click={about}/>
+        <!--<MyButton text="Link exchange" icon={{ icon: 'material:badge', size: 16 }} click={exchangeLinks}/>-->
     </div>
 </div>
 
@@ -73,6 +83,7 @@
         position: absolute;
         bottom: 0;
         margin: 16px 8px;
+        display: flex;
     }
 
     @media screen and (width < 600px) {
