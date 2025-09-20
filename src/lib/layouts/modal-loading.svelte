@@ -3,49 +3,37 @@
     import Button from "$lib/components/button.svelte";
     import {onMount} from "svelte";
 
-    let { cancel } = $props();
+    let { cancel, text } = $props();
 
     let txt: AnimTypingText;
-
-    let stage = 0;
 
     function clickCancel() {
         cancel();
     }
 
     onMount(() => {
+        txt.startTextAnimation();
         return() => txt.reset();
     });
-
-    setTimeout(() => {
-        switch (txt) {
-            case undefined:
-            case null:
-                return;
-        }
-
-        txt.setPlayEndCallback(() => {
-            if (stage < 3)
-                stage++;
-
-            else
-            {
-            }
-        })
-    }, 4);
 </script>
 
-<div>
+<div class="layout">
+    {#if cancel !== undefined}
+        <br/>
+    {/if}
+
     <div class="indicator">
+        {#if text !== undefined}
+            <span>{text}</span>
+        {/if}
         <AnimTypingText bind:this={txt} duration={1000}
                         text="..."
-                        repeat={true}
-                        playForwardOnLoad={true}/>
+                        repeat={true}/>
     </div>
 
     {#if cancel !== undefined}
         <Button click={clickCancel}
-                icon={undefined}
+                icon={{ icon: "material:close", size: 24 }}
                 text="Cancel"
                 props={{}}/>
     {/if}
@@ -54,11 +42,16 @@
 <style>
     .indicator {
         min-height: 24px;
+        vertical-align: bottom;
     }
 
-    div {
-        margin: auto;
+    .layout {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        inset: 0;
+        padding: 8px;
     }
 </style>

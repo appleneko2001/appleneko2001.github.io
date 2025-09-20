@@ -5,7 +5,7 @@
     import type {Component, Snippet} from 'svelte';
     import IconButton from '../icon-button.svelte';
 
-    let {children, close, header, isUserCloseable, properties} = $props();
+    let {children, close, header, isUserCloseable, properties, dialogProps} = $props();
     let mode = "";
     let MyComponent = $state<Component | null>(null);
     let params = $state<Record<string, any>>(properties);
@@ -32,7 +32,8 @@
 
 <div class="modal-view"
      in:scale={{easing: backOut, duration: 200}}
-     out:scale={{easing: linear, duration: 200}}>
+     out:scale={{easing: linear, duration: 200}}
+     {...dialogProps}>
     <div class="modal-layout">
         <div class="modal-header">
             <div class="header-left">{header}</div>
@@ -42,13 +43,15 @@
             {/if}
         </div>
 
-        {#if mode === "string"}
-            {children}
-        {:else if mode === "component"}
-            <MyComponent {...params}/>
-        {:else}
-            {@render children?.()}
-        {/if}
+        <div class="modal-content">
+            {#if mode === "string"}
+                {children}
+            {:else if mode === "component"}
+                <MyComponent {...params}/>
+            {:else}
+                {@render children?.()}
+            {/if}
+        </div>
     </div>
 </div>
 

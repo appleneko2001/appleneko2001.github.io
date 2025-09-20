@@ -22,11 +22,13 @@
         {
             header = "Modal!",
             isUserCloseable = true,
-            onshow = undefined
+            onshow = undefined,
+            dialogProps = undefined
         } : {
             header?: string | null | undefined,
             isUserCloseable?: boolean | undefined,
-            onshow?: (view: any, closeModal: Function) => void | undefined
+            onshow?: (view: any, closeModal: Function) => void | undefined,
+            dialogProps?: any
         } = {})
     {
         switch (typeof modal) {
@@ -37,7 +39,7 @@
         if (modal === null)
             return;
 
-        modals.push({ modal, modalProps, header, isUserCloseable, onshow });
+        modals.push({ modal, modalProps, header, isUserCloseable, onshow, dialogProps});
     }
 
     const attachment: Attachment = (hostElement) => {
@@ -48,7 +50,7 @@
         if (queue === undefined)
             return;
 
-        const {modal, modalProps, onshow, header, isUserCloseable} = queue;
+        const {modal, modalProps, onshow, header, isUserCloseable, dialogProps} = queue;
 
         const key = Date.now();
 
@@ -65,7 +67,7 @@
                 isForeground = false;
         }
 
-        const view = mount(ModalView, {target: modalHost, props: {children: modal, header, isUserCloseable, close, properties: modalProps}});
+        const view = mount(ModalView, {target: modalHost, props: {children: modal, header, isUserCloseable, properties: modalProps, dialogProps}});
         openedModals.set(key, view);
 
         onshow?.(view, close);

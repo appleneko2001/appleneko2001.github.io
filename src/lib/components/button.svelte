@@ -17,6 +17,8 @@
         border: none;
         padding: 6px;
         position: relative;
+        display: flex;
+        align-items: center;
     }
 
     button > span {
