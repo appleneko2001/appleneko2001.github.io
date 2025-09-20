@@ -21,6 +21,7 @@
     text = "";
     let anim_reverse = false;
     let progress: number;
+    let start: number = 0;
 
     const ongoingIntervals: Array<number | NodeJS.Timeout> = [];
 
@@ -38,7 +39,10 @@
 
     export function reset() {
         clearIntervalEvents();
+        initialFrame();
+    }
 
+    function initialFrame(){
         if (disabled) {
             text = the_text;
             return;
@@ -46,6 +50,10 @@
 
         progress = initial;
         updateText();
+    }
+
+    function nextAnimationIteration() {
+        start = Date.now();
     }
 
     function clearIntervalEvents() {
@@ -66,9 +74,10 @@
             return;
         }
 
-        const start = Date.now();
+        nextAnimationIteration();
         const durationMS = duration;
         const durationEach = durationMS / the_text.length;
+        let lastFrame = false;
 
         anim_reverse = reverse;
 
@@ -78,11 +87,9 @@
             const now = Date.now();
             const delta = now - start;
 
-            if (delta > durationMS) {
-                progress = anim_reverse ? 0 : the_text.length;
-                clearIntervalEvents();
+            if (lastFrame){
+                lastFrame = false;
 
-                updateText();
                 try{
                     if(onPlayEnd?.() === false)
                     {
@@ -96,14 +103,28 @@
                     clearIntervalEvents();
                 }
 
-                if (repeat) {
-                    reset();
-                    requestAnimationFrame(() => startTextAnimation(reverse));
+                if(repeat)
+                {
+                    initialFrame();
+                    nextAnimationIteration();
                 }
-            } else {
+                else
+                {
+                    clearIntervalEvents();
+                }
+                return;
+            }
+
+            // next frame and render
+            if (delta < durationMS) {
                 progress = progress + (anim_reverse ? -1 : 1);
                 updateText();
+                return;
             }
+
+            progress = anim_reverse ? 0 : the_text.length;
+            updateText();
+            lastFrame = true;
         }, durationEach);
         ongoingIntervals.push(key);
     }
