@@ -26,15 +26,19 @@
 
     let txt: AnimTypingText | null = null;
 
-    const ongoingTimeouts: number[] = [];
+    const ongoingTimeouts: Array<NodeJS.Timeout | number> = [];
+
+    function clearTimeouts(){
+        let item: NodeJS.Timeout | number | undefined;
+        while ((item = ongoingTimeouts.pop()) != undefined) {
+            clearTimeout(item);
+        }
+    }
 
     function onPointerOver() {
         const key = setTimeout(() => {
             focused = true;
-            let item: number | undefined;
-            while ((item = ongoingTimeouts.pop()) != undefined) {
-                clearTimeout(item);
-            }
+            clearTimeouts();
         }, 50);
         ongoingTimeouts.push(key);
 
@@ -42,10 +46,7 @@
     }
 
     function onPointerLeave() {
-        let item: number | undefined;
-        while ((item = ongoingTimeouts.pop()) != undefined) {
-            clearTimeout(item);
-        }
+        clearTimeouts();
         focused = false;
 
         txt?.startTextAnimation(true);
@@ -61,6 +62,7 @@
         if(!showLoading)
             return;
 
+        // Cancel redirect implementation
         function closeModalWeakRef(){
             window.stop();
             closeModal?.();
@@ -68,11 +70,17 @@
 
         let closeModal: Function;
 
+        // Show modal "redirecting" with cancel button
+
         const host = GlobalVars.get("ModalHost") as ModalHost;
-        host?.showModal(ModalLoading, { cancel: closeModalWeakRef },
+        host?.showModal(ModalLoading, { cancel: closeModalWeakRef, text: "Redirecting" },
             {
                 header: null, isUserCloseable: false,
-                onshow: (_, close) => {closeModal = close;}
+                onshow: (_, close) => {closeModal = close;},
+                dialogProps: {
+                    style: "min-width: 120px; min-height: 120px;"
+                }
+
             });
 
         window.onabort = () => closeModal?.();
