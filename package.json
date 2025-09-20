@@ -21,5 +21,9 @@
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.0.0",
 		"vite": "^7.1.5"
+	},
+	"dependencies": {
+		"focus-trap": "^7.6.5",
+		"npm-ls": "^1.0.0"
 	}
 }
