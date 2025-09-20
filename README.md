@@ -1,7 +1,7 @@
-Personal portfolio and apps repository
+Portfolio app
 https://website.appleneko2001.workers.dev/
 
-[Powered by SvelteKit](https://svelte.dev/) ・ [Cloudflare Worker (hosting)](https://workers.cloudflare.com/)
+[Powered by SvelteKit](https://svelte.dev/) ・ [Cloudflare Workers® (hosting)](https://workers.cloudflare.com/)
 
 <!--# sv
 
