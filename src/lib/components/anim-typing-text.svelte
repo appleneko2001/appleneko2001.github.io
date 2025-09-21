@@ -68,6 +68,27 @@
         text = the_text.slice(0, Math.min(Math.max(progress, 0), the_text.length));
     }
 
+    function triggerOnPlayEnd(){
+        const callback = onPlayEnd;
+
+        // symbol or anything else than function should block the way
+        if(typeof callback !== "function")
+            return;
+
+        try{
+            if(callback() === false)
+            {
+                console.log("stop playback and throwing callback because onPlayEnd returned false.");
+                onPlayEnd = undefined;
+                return;
+            }
+        }
+        catch (e){
+            console.error(e);
+            clearIntervalEvents();
+        }
+    }
+
     export function startTextAnimation(reverse: boolean = false) {
         if (disabled) {
             text = the_text;
@@ -90,23 +111,13 @@
             if (lastFrame){
                 lastFrame = false;
 
-                try{
-                    if(onPlayEnd?.() === false)
-                    {
-                        console.log("stop playback and throwing callback because onPlayEnd returned false.");
-                        onPlayEnd = undefined;
-                        return;
-                    }
-                }
-                catch (e){
-                    console.error(e);
-                    clearIntervalEvents();
-                }
+                triggerOnPlayEnd();
 
                 if(repeat)
                 {
                     initialFrame();
                     nextAnimationIteration();
+                    updateText();
                 }
                 else
                 {
