@@ -8,9 +8,7 @@
 
     function updateState(){
         const size = contentView.childElementCount;
-        console.log(size);
         isEmpty = size === 0;
-
     }
 
     // TODO: find a way to detect content is not empty without MutationObserver

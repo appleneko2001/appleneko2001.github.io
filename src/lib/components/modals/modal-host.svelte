@@ -55,9 +55,7 @@
         modals.push({ modal, modalProps, header, isUserCloseable, isFullScreen, onshow, dialogProps});
     }
 
-    const attachment: Attachment = (hostElement) => {
-        console.log(hostElement.nodeName);
-
+    const attachment: Attachment = (_) => {
         const queue = modals.pop();
 
         if (queue === undefined)
