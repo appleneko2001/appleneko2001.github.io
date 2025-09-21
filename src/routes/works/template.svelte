@@ -55,6 +55,7 @@
         min-width: max(96px, 20%);
         align-content: center;
         transition: transform 0.2s;
+        z-index: -1;
     }
 
     .cover-host > :global(.icon) {
