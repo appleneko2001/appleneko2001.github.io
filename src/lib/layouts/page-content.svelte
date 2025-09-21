@@ -22,7 +22,7 @@
             return;
         }
 
-        const observer = new MutationObserver((_, _) => updateState());
+        const observer = new MutationObserver(() => updateState());
         observer.observe(contentView, {childList: true});
 
         return () => observer.disconnect();
