@@ -88,8 +88,11 @@
     function nextStageAfterReminder(){
         reminderCloseAccessor?.();
 
+        const ev = setTimeout(() => window.open(href ?? "", "_self"), 500);
+
         // Cancel redirect implementation
         function closeModalWeakRef(){
+            clearTimeout(ev);
             window.stop();
             closeModal?.();
         }
@@ -110,11 +113,9 @@
         window.onabort = () => closeModal?.();
         window.onpagehide = () => closeModal?.();
 
-        const ev = setTimeout(() => window.open(href ?? "", "_self"), 500);
-
         const cancelLoad = function() {
             window.onbeforeunload = () => closeModal?.();
-            clearTimeout(ev);
+
             document.removeEventListener("DOMContentLoaded", cancelLoad);
         }
 
