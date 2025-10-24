@@ -4,9 +4,20 @@
     import {backOut, linear} from "svelte/easing";
     import {type Component, onMount, type Snippet} from 'svelte';
     import IconButton from '../icon-button.svelte';
+    import MyButton from '$lib/components/my-button.svelte';
     import * as focusTrap from 'focus-trap';
 
-    let {children, close, header, isUserCloseable, isFullScreen, properties, dialogProps} = $props();
+    let {
+        children,
+        close,
+        header,
+        isUserCloseable,
+        isFullScreen,
+        properties,
+        buttons,
+        dialogProps
+    } = $props();
+
     let mode = "";
     let MyComponent = $state<Component | null>(null);
     let params = $state<Record<string, any>>(properties);
@@ -71,6 +82,18 @@
                 {@render children?.()}
             {/if}
         </div>
+
+        {#if buttons !== undefined}
+            <div class="modal-buttons">
+                {#if Array.isArray(buttons)}
+                    {#each buttons as button}
+                        <MyButton {...button}/>
+                    {/each}
+                {:else}
+                    <MyButton {...buttons}/>
+                {/if}
+            </div>
+        {/if}
     </div>
 </div>
 

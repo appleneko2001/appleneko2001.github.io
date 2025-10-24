@@ -3,6 +3,7 @@
     import {createAttachmentKey} from 'svelte/attachments';
     import ModalView from "./modal-view.svelte";
     import { mount, unmount} from "svelte";
+    import type {MyButtonProps} from "$lib/components/my-button-props";
 
     const modals = $state<any[]>([]);
 
@@ -35,11 +36,13 @@
             isUserCloseable = true,
             isFullScreen = false,
             onshow = undefined,
+            buttons = undefined,
             dialogProps = undefined
         } : {
             header?: string | null | undefined,
             isUserCloseable?: boolean | undefined,
             isFullScreen?: boolean | undefined,
+            buttons?: Array<MyButtonProps> | MyButtonProps | undefined,
             onshow?: (view: any, closeModal: Function) => void | undefined,
             dialogProps?: any
         } = {})
@@ -52,7 +55,7 @@
         if (modal === null)
             return;
 
-        modals.push({ modal, modalProps, header, isUserCloseable, isFullScreen, onshow, dialogProps});
+        modals.push({ modal, modalProps, header, isUserCloseable, isFullScreen, onshow, buttons, dialogProps});
     }
 
     const attachment: Attachment = (_) => {
@@ -61,7 +64,7 @@
         if (queue === undefined)
             return;
 
-        const {modal, modalProps, onshow, header, isUserCloseable, isFullScreen, dialogProps} = queue;
+        const {modal, modalProps, onshow, header, isUserCloseable, isFullScreen, buttons, dialogProps} = queue;
 
         const key = Date.now();
 
@@ -96,6 +99,7 @@
                     isFullScreen,
                     close,
                     properties: modalProps,
+                    buttons,
                     dialogProps
                 }
             });
