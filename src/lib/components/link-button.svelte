@@ -1,7 +1,7 @@
 <script lang="ts">
     import "$lib/themes/theming.css";
     import IconSource from "./icon-source.svelte";
-    import { type IconProps } from "$lib/components/icon-props";
+    import {type IconProps} from "$lib/components/icon-props";
 
     let {
         icon,
@@ -10,7 +10,7 @@
         target,
         children,
         style,
-    } : {
+    }: {
         icon?: IconProps | string;
         text?: string;
         href: string;
@@ -34,7 +34,7 @@
 <a class="link-button" href={href} style={style} target={target}>
     <!-- {@render icon?.()} -->
     {#if icon}
-        <IconSource {...iconProps} />
+        <IconSource {...iconProps}/>
     {/if}
 
     {#if text}

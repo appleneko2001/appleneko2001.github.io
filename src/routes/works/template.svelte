@@ -2,13 +2,14 @@
     import type {ProjectEntry} from "$lib/apis/project-entry";
     import IconSource from "$lib/components/icon-source.svelte";
     import {getProjectStatusAsIcon} from "$lib/apis/project-status";
-    let {data} : { data: ProjectEntry }= $props();
+
+    let {data}: { data: ProjectEntry } = $props();
 
     let date = $state<Date | undefined>();
 
     date = typeof data.date === "string" ?
-            new Date(Date.parse(data.date)) :
-            data.date as Date;
+        new Date(Date.parse(data.date)) :
+        data.date as Date;
 
 </script>
 
@@ -16,7 +17,7 @@
     {#if data.cover}
         <div class="cover-host">
             {#if data.cover.isIcon}
-                <IconSource icon={data.cover.icon ?? ""} size={48} />
+                <IconSource icon={data.cover.icon ?? ""} size={48}/>
             {:else if data.cover.url}
                 <div class="cover-pic" style="--url: {data.cover.url}"></div>
             {/if}
@@ -36,9 +37,9 @@
         </div>
         <div>{data.desc}</div>
         <div class="links">
-        {#each data.links ?? [] as link}
-            <a href={link.url} target="_blank">{link.name}</a>
-        {/each}
+            {#each data.links ?? [] as link}
+                <a href={link.url} target="_blank">{link.name}</a>
+            {/each}
         </div>
     </div>
 </div>
@@ -73,7 +74,7 @@
         gap: 8px;
     }
 
-    .metadata .header{
+    .metadata .header {
         font-size: 1.25rem;
     }
 
@@ -83,8 +84,8 @@
         margin: 0 8px;
     }
 
-    .status :global(.icon){
-        align-self:stretch;
+    .status :global(.icon) {
+        align-self: stretch;
     }
 
     .status:empty {

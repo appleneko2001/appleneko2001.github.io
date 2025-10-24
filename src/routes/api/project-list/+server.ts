@@ -1,9 +1,8 @@
 import type {ListingResult} from "$lib/apis/listing-result";
 import type {ProjectEntry} from "$lib/apis/project-entry";
 
-function process(code: number, json: string) : ListingResult<ProjectEntry>
-{
-    if(code === 404)
+function process(code: number, json: string): ListingResult<ProjectEntry> {
+    if (code === 404)
         return {
             msg: "Host backend is misconfigured! 😵"
         };

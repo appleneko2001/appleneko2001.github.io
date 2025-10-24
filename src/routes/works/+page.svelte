@@ -8,13 +8,13 @@
     import ItemTemplate from "./template.svelte";
     import ProgressText from '$lib/components/progress-text.svelte';
 
-    async function fetchData () : Promise<ListingResult<ProjectEntry>> {
+    async function fetchData(): Promise<ListingResult<ProjectEntry>> {
         const result = await fetch("/api/project-list");
         return await result.json();
     }
 
     function unwrapObject(data: any): ListingResult<ProjectEntry> {
-        return data as ListingResult<ProjectEntry> ?? { msg: "page broken :(" };
+        return data as ListingResult<ProjectEntry> ?? {msg: "page broken :("};
     }
 </script>
 
@@ -37,12 +37,13 @@
     </div>
 
     <div class="page-content">
-        <PageContent >
+        <PageContent>
             {#await fetchData()}
                 <div class="presenter"
                      out:fade={{ duration: 200 }}
                      style="text-align: center">
-                    Loading<ProgressText/>
+                    Loading
+                    <ProgressText/>
                 </div>
             {:then data}
                 <!--<div>{JSON.stringify(data)}</div>-->
@@ -76,11 +77,11 @@
         font-size: 1.4em;
     }
 
-    .page-content{
+    .page-content {
         padding-top: 1.5em;
     }
 
-    .presenter{
+    .presenter {
         position: absolute;
         inset: 0;
         z-index: 0;

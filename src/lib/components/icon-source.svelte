@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { type IconProps } from "$lib/components/icon-props";
+    import {type IconProps} from "$lib/components/icon-props";
 
     let {
         icon,
         size = 24,
         fill = "var(--foreground-colour)"
-    } : IconProps = $props();
+    }: IconProps = $props();
 
     const isIconSrc = typeof icon === "string" ? icon.includes("://") : false;
 
-    let finalUrl : string = icon;
+    let finalUrl: string = icon;
 
-    function getIconUrl(src: string, name: string) : string {
+    function getIconUrl(src: string, name: string): string {
         switch (src) {
             case "material":
                 return "https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/" + name + ".svg";

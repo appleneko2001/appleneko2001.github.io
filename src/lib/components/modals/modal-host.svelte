@@ -2,7 +2,7 @@
     import type {Attachment} from "svelte/attachments";
     import {createAttachmentKey} from 'svelte/attachments';
     import ModalView from "./modal-view.svelte";
-    import { mount, unmount} from "svelte";
+    import {mount, unmount} from "svelte";
     import type {MyButtonProps} from "$lib/components/my-button-props";
 
     const modals = $state<any[]>([]);
@@ -14,15 +14,15 @@
     let modalHost: HTMLElement;
 
     function tryDismissCurrentModal(event: MouseEvent) {
-        if(openedModals.size === 0)
+        if (openedModals.size === 0)
             return;
 
-        if(event.target !== modalHost)
+        if (event.target !== modalHost)
             return;
 
         const key = openedModals.keys().toArray().at(-1);
 
-        if(key === undefined)
+        if (key === undefined)
             return;
 
         openedModals.get(key).tryClose();
@@ -38,15 +38,14 @@
             onshow = undefined,
             buttons = undefined,
             dialogProps = undefined
-        } : {
+        }: {
             header?: string | null | undefined,
             isUserCloseable?: boolean | undefined,
             isFullScreen?: boolean | undefined,
             buttons?: Array<MyButtonProps> | MyButtonProps | undefined,
             onshow?: (view: any, closeModal: Function) => void | undefined,
             dialogProps?: any
-        } = {})
-    {
+        } = {}) {
         switch (typeof modal) {
             case "undefined":
                 return;
@@ -55,7 +54,7 @@
         if (modal === null)
             return;
 
-        modals.push({ modal, modalProps, header, isUserCloseable, isFullScreen, onshow, buttons, dialogProps});
+        modals.push({modal, modalProps, header, isUserCloseable, isFullScreen, onshow, buttons, dialogProps});
     }
 
     const attachment: Attachment = (_) => {
@@ -69,7 +68,7 @@
         const key = Date.now();
 
         function close() {
-            const { view } = openedModals.get(key);
+            const {view} = openedModals.get(key);
 
             if (view === undefined)
                 return;
@@ -82,7 +81,7 @@
         }
 
         function tryClose() {
-            if(!isUserCloseable)
+            if (!isUserCloseable)
                 return;
 
             close();
@@ -92,16 +91,16 @@
             {
                 target: modalHost,
                 props:
-                {
-                    children: modal,
-                    header,
-                    isUserCloseable,
-                    isFullScreen,
-                    close,
-                    properties: modalProps,
-                    buttons,
-                    dialogProps
-                }
+                    {
+                        children: modal,
+                        header,
+                        isUserCloseable,
+                        isFullScreen,
+                        close,
+                        properties: modalProps,
+                        buttons,
+                        dialogProps
+                    }
             });
         openedModals.set(key, {view, tryClose});
 

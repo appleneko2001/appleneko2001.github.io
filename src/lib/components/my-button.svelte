@@ -1,13 +1,13 @@
 <script lang="ts">
     import IconSource from "./icon-source.svelte";
-    import { type IconProps } from "$lib/components/icon-props";
+    import {type IconProps} from "$lib/components/icon-props";
 
     let {
         props,
         icon,
         text,
         click
-    } : {
+    }: {
         props?: any,
         icon?: IconProps,
         text?: string;
@@ -16,9 +16,9 @@
 </script>
 
 <button onclick={click} {...props}>
-{#if icon !== undefined}
-    <IconSource {...icon}/>
-{/if}
+    {#if icon !== undefined}
+        <IconSource {...icon}/>
+    {/if}
     <span>{text}</span>
 </button>
 

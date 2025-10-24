@@ -1,4 +1,4 @@
-export interface ListingResult <T> {
+export interface ListingResult<T> {
     results?: T[];
     msg?: string;
 }

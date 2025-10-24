@@ -42,7 +42,7 @@
         initialFrame();
     }
 
-    function initialFrame(){
+    function initialFrame() {
         if (disabled) {
             text = the_text;
             return;
@@ -68,22 +68,20 @@
         text = the_text.slice(0, Math.min(Math.max(progress, 0), the_text.length));
     }
 
-    function triggerOnPlayEnd(){
+    function triggerOnPlayEnd() {
         const callback = onPlayEnd;
 
         // symbol or anything else than function should block the way
-        if(typeof callback !== "function")
+        if (typeof callback !== "function")
             return;
 
-        try{
-            if(callback() === false)
-            {
+        try {
+            if (callback() === false) {
                 console.log("stop playback and throwing callback because onPlayEnd returned false.");
                 onPlayEnd = undefined;
                 return;
             }
-        }
-        catch (e){
+        } catch (e) {
             console.error(e);
             clearIntervalEvents();
         }
@@ -108,19 +106,16 @@
             const now = Date.now();
             const delta = now - start;
 
-            if (lastFrame){
+            if (lastFrame) {
                 lastFrame = false;
 
                 triggerOnPlayEnd();
 
-                if(repeat)
-                {
+                if (repeat) {
                     initialFrame();
                     nextAnimationIteration();
                     updateText();
-                }
-                else
-                {
+                } else {
                     clearIntervalEvents();
                 }
                 return;

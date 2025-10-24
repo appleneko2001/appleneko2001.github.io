@@ -10,9 +10,9 @@
 
     import AboutWebsite from '$lib/layouts/modal-about-website.svelte';
 
-    function about(){
+    function about() {
         const modalHost = GlobalVars.get("ModalHost") as ModalHost;
-        modalHost.showModal(AboutWebsite, undefined, { header: "Info" });
+        modalHost.showModal(AboutWebsite, undefined, {header: "Info"});
     }
 </script>
 
@@ -38,7 +38,7 @@
         <!--        <ProfileEntry icon="x" text="Twitter (formerly X)"-->
         <!--                      href="https://twitter.com/appleneko2001"/>-->
         <ProfileEntryWithRemind icon="discord" text="Discord" showLoading={true}
-                      href="https://discord.com/users/499588722174459914">
+                                href="https://discord.com/users/499588722174459914">
             <style>
                 .reminder {
                     margin: 8px;
@@ -46,7 +46,8 @@
                 }
             </style>
             <div class="reminder">
-                Due to stupid discord fraud chatbot annoyance, please send me a purpose of chat request before DM-ing me by other ways, otherwise I would ignore your DM request. Thanks for your understanding.
+                Due to stupid discord fraud chatbot annoyance, please send me a purpose of chat request before DM-ing me
+                by other ways, otherwise I would ignore your DM request. Thanks for your understanding.
             </div>
         </ProfileEntryWithRemind>
         <ProfileEntry icon="bluesky" text="Bluesky" showLoading={true}

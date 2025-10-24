@@ -3,7 +3,7 @@
     import MyButton from "$lib/components/my-button.svelte";
     import {onMount} from "svelte";
 
-    let { cancel, text } = $props();
+    let {cancel, text} = $props();
 
     let txt: AnimTypingText;
 
@@ -13,7 +13,7 @@
 
     onMount(() => {
         txt.startTextAnimation();
-        return() => txt.reset();
+        return () => txt.reset();
     });
 </script>
 

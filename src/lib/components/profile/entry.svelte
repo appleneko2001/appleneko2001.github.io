@@ -28,7 +28,7 @@
 
     const ongoingTimeouts: Array<NodeJS.Timeout | number> = [];
 
-    function clearTimeouts(){
+    function clearTimeouts() {
         let item: NodeJS.Timeout | number | undefined;
         while ((item = ongoingTimeouts.pop()) != undefined) {
             clearTimeout(item);
@@ -53,17 +53,16 @@
     }
 
     function onClick(e: UIEvent) {
-        if (!focused && expanded !== true)
-        {
+        if (!focused && expanded !== true) {
             e.preventDefault();
             return;
         }
 
-        if(!showLoading)
+        if (!showLoading)
             return;
 
         // Cancel redirect implementation
-        function closeModalWeakRef(){
+        function closeModalWeakRef() {
             window.stop();
             closeModal?.();
         }
@@ -73,10 +72,12 @@
         // Show modal "redirecting" with cancel button
 
         const host = GlobalVars.get("ModalHost") as ModalHost;
-        host?.showModal(ModalLoading, { cancel: closeModalWeakRef, text: "Redirecting" },
+        host?.showModal(ModalLoading, {cancel: closeModalWeakRef, text: "Redirecting"},
             {
                 header: null, isUserCloseable: false,
-                onshow: (_, close) => {closeModal = close;},
+                onshow: (_, close) => {
+                    closeModal = close;
+                },
                 dialogProps: {
                     style: "min-width: 120px; min-height: 120px;"
                 }
@@ -86,7 +87,7 @@
         window.onabort = () => closeModal?.();
         window.onpagehide = () => closeModal?.();
 
-        const cancelLoad = function() {
+        const cancelLoad = function () {
             window.onbeforeunload = () => closeModal?.();
             document.removeEventListener("DOMContentLoaded", cancelLoad);
         }

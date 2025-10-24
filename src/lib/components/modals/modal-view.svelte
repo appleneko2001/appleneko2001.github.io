@@ -33,8 +33,8 @@
         MyComponent = children;
     }
 
-    function clickClose(){
-        if(!isUserCloseable)
+    function clickClose() {
+        if (!isUserCloseable)
             return;
 
         close?.();
@@ -46,7 +46,7 @@
 
         const view = modalView as Element;
         console.log(view);
-        if(view == null){
+        if (view == null) {
             return;
         }
 

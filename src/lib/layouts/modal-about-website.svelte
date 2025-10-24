@@ -54,16 +54,16 @@
 <br/>
 
 <style>
-.tech-stack-card {
-    display: flex;
-    flex-direction: column;
-}
+    .tech-stack-card {
+        display: flex;
+        flex-direction: column;
+    }
 
-.tech-stack-card .header{
-    font-size: 1.25rem;
-}
+    .tech-stack-card .header {
+        font-size: 1.25rem;
+    }
 
-.text{
-    margin: 0 8px;
-}
+    .text {
+        margin: 0 8px;
+    }
 </style>

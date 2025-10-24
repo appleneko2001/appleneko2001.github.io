@@ -6,7 +6,7 @@
     let isEmpty = $state(false);
     let contentView: HTMLElement;
 
-    function updateState(){
+    function updateState() {
         const size = contentView.childElementCount;
         isEmpty = size === 0;
     }
@@ -14,8 +14,7 @@
     // TODO: find a way to detect content is not empty without MutationObserver
     onMount(() => {
         updateState();
-        if(contentView === undefined)
-        {
+        if (contentView === undefined) {
             console.log("ContentView bind failure. Unable to use MutationObserver");
             return;
         }
