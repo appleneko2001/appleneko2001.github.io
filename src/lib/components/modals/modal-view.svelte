@@ -61,8 +61,8 @@
 <div class="modal-view"
      class:full-screen={isFullScreen}
      bind:this={modalView}
-     in:scale={{easing: backOut, duration: 200}}
-     out:scale={{easing: linear, duration: 200}}
+     in:scale={{easing: backOut, duration: 200, start: 0.5}}
+     out:scale={{easing: linear, duration: 200, start: 0.8}}
      {...dialogProps}>
     <div class="modal-layout">
         <div class="modal-header">

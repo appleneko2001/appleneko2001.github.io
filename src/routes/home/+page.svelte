@@ -42,6 +42,7 @@
                 .reminder {
                     margin: 8px;
                     max-width: 320px;
+                    text-align: justify;
                 }
             </style>
             <div class="reminder">
@@ -84,7 +85,7 @@
         justify-content: center;
         flex-flow: wrap;
         align-content: center;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .footer-area {
