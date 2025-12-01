@@ -27,6 +27,7 @@
     } = $props();
 
     let txt: AnimTypingText | null = null;
+    let view: HTMLElement;
 
     const ongoingTimeouts: Array<NodeJS.Timeout | number> = [];
 
@@ -46,9 +47,18 @@
             focused = true;
             clearTimeouts();
         }, 50);
-        ongoingTimeouts.push(key);
 
+        const prevFocusedEntry = GlobalVars.get("focused-entry");
+        if(typeof prevFocusedEntry === "object" && prevFocusedEntry !== view) {
+            const caller = prevFocusedEntry["__focusout"];
+            if(typeof caller === "function")
+                caller();
+        }
+
+        ongoingTimeouts.push(key);
         txt?.startTextAnimation();
+
+        GlobalVars.set("focused-entry", view);
     }
 
     function onPointerLeave() {
@@ -136,7 +146,7 @@
     }
 </script>
 
-<a class="profile-button"
+<a bind:this={view} class="profile-button"
    class:expanded={expanded}
    class:focused={focused}
    title={hint}
