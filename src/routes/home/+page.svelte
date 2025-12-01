@@ -46,8 +46,11 @@
                 }
             </style>
             <div class="reminder">
-                Due to stupid discord fraud chatbot annoyance, please send me a purpose of chat request before DM-ing me
-                by other ways, otherwise I would ignore your DM request. Thanks for your understanding.
+                Due to the stupid discord fraud chatbot annoyance,
+                please send me a purpose of chat request through other ways first
+                before messaging me to my discord.
+                <br/>
+                Thanks for your understanding 🙏
             </div>
         </ProfileEntry>
         <ProfileEntry icon="bluesky" text="Bluesky" showLoading={true}
