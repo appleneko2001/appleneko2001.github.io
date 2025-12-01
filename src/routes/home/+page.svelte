@@ -1,7 +1,6 @@
 <script lang="ts">
     import {fade} from 'svelte/transition'
     import ProfileEntry from "$lib/components/profile/entry.svelte";
-    import ProfileEntryWithRemind from "$lib/components/profile/entry-with-reminder.svelte";
     import ProfileAvatar from "$lib/components/profile/avatar.svelte";
     import {AvatarSourceUrl} from "$lib/assets/avatar-source";
     import MyButton from '$lib/components/my-button.svelte';
@@ -37,7 +36,7 @@
 
         <!--        <ProfileEntry icon="x" text="Twitter (formerly X)"-->
         <!--                      href="https://twitter.com/appleneko2001"/>-->
-        <ProfileEntryWithRemind icon="discord" text="Discord" showLoading={true}
+        <ProfileEntry icon="discord" text="Discord" showLoading={true}
                                 href="https://discord.com/users/499588722174459914">
             <style>
                 .reminder {
@@ -49,7 +48,7 @@
                 Due to stupid discord fraud chatbot annoyance, please send me a purpose of chat request before DM-ing me
                 by other ways, otherwise I would ignore your DM request. Thanks for your understanding.
             </div>
-        </ProfileEntryWithRemind>
+        </ProfileEntry>
         <ProfileEntry icon="bluesky" text="Bluesky" showLoading={true}
                       href="https://appleneko2001.bsky.social"/>
         <ProfileEntry icon="github" text="GitHub" showLoading={true}

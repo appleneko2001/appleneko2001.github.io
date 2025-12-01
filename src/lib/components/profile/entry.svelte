@@ -12,6 +12,7 @@
         href,
         expanded = false,
         focused = false,
+        children = null,
         hint = text,
         showLoading = false,
     }: {
@@ -20,6 +21,7 @@
         href?: string,
         expanded?: boolean,
         focused?: boolean,
+        children?: any,
         hint?: string | null,
         showLoading?: boolean,
     } = $props();
@@ -27,6 +29,10 @@
     let txt: AnimTypingText | null = null;
 
     const ongoingTimeouts: Array<NodeJS.Timeout | number> = [];
+
+    function reminderIsEmpty() {
+        return children === null || children === undefined;
+    }
 
     function clearTimeouts() {
         let item: NodeJS.Timeout | number | undefined;
@@ -61,8 +67,43 @@
         if (!showLoading)
             return;
 
+        const reminder = children;
+
+        if(reminder === null || reminder === undefined) {
+            nextStageAfterReminder();
+            return;
+        }
+
+        showReminder(reminder);
+    }
+
+    let reminderCloseAccessor: Function | null = null;
+
+    function showReminder(reminder: any) {
+        const modalHost = GlobalVars.get("ModalHost") as ModalHost;
+        modalHost.showModal(reminder, undefined, {
+            header: "Reminder",
+            onshow: (_, close) => {
+                reminderCloseAccessor = close;
+            },
+            buttons: [
+                {
+                    text: "Proceed",
+                    click: () => {
+                        reminderCloseAccessor?.();
+                        nextStageAfterReminder();
+                    }
+                }
+            ]
+        });
+    }
+
+    function nextStageAfterReminder() {
+        const ev = setTimeout(() => window.open(href ?? "", "_self"), 500);
+
         // Cancel redirect implementation
         function closeModalWeakRef() {
+            clearTimeout(ev);
             window.stop();
             closeModal?.();
         }
@@ -70,7 +111,6 @@
         let closeModal: Function;
 
         // Show modal "redirecting" with cancel button
-
         const host = GlobalVars.get("ModalHost") as ModalHost;
         host?.showModal(ModalLoading, {cancel: closeModalWeakRef, text: "Redirecting"},
             {
@@ -81,7 +121,6 @@
                 dialogProps: {
                     style: "min-width: 120px; min-height: 120px;"
                 }
-
             });
 
         window.onabort = () => closeModal?.();
@@ -89,6 +128,7 @@
 
         const cancelLoad = function () {
             window.onbeforeunload = () => closeModal?.();
+
             document.removeEventListener("DOMContentLoaded", cancelLoad);
         }
 
@@ -100,7 +140,7 @@
    class:expanded={expanded}
    class:focused={focused}
    title={hint}
-   href={href}
+   href={reminderIsEmpty() ? href : "javascript:void(0)"}
    onfocusin={onPointerOver}
    onfocusout={onPointerLeave}
    onmouseenter={onPointerOver}
