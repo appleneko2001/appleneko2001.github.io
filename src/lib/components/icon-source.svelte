@@ -4,12 +4,18 @@
     let {
         icon,
         size = 24,
-        fill = "var(--foreground-colour)"
+        fill = "var(--foreground-colour)",
+        wasHidden = false
     }: IconProps = $props();
 
     const isIconSrc = typeof icon === "string" ? icon.includes("://") : false;
 
     let finalUrl: string = icon;
+    let hidden = $state(wasHidden);
+
+    export function setHidden(v: boolean) {
+      hidden = v;
+    }
 
     function getIconUrl(src: string, name: string): string {
         switch (src) {
@@ -18,6 +24,9 @@
 
             case "simpleicons":
                 return "https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/" + icon + ".svg";
+
+                case "simpleicons@v10":
+                    return "https://cdn.jsdelivr.net/npm/simple-icons@v10.0.0/icons/" + icon + ".svg";
 
             default:
                 console.error(`Unknown type ${src}, ${name}`);
@@ -37,7 +46,7 @@
 </script>
 
 {#if icon}
-    <div class="icon"
+    <div class="icon" class:hidden={hidden}
          style="--size: {size}px; mask-image: url({finalUrl}); background: {fill}"></div>
 {/if}
 
@@ -48,5 +57,11 @@
         width: var(--size);
         height: var(--size);
         mask-size: cover;
+        opacity: 1.0;
+        transition: opacity 0.2s linear;
+    }
+
+    .hidden{
+        opacity: 0.0;
     }
 </style>

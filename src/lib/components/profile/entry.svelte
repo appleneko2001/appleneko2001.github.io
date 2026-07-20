@@ -2,13 +2,16 @@
     import "$lib/themes/theming.css";
     import IconSource from "../icon-source.svelte";
     import AnimTypingText from "../anim-typing-text.svelte";
-    import ModalHost from '$lib/components/modals/modal-host.svelte';
-    import ModalLoading from '$lib/layouts/modal-loading.svelte';
-    import {GlobalVars} from "$lib/global-accessor";
+    import ModalHost from "$lib/components/modals/modal-host.svelte";
+    import ModalLoading from "$lib/layouts/modal-loading.svelte";
+    import { GlobalVars } from "$lib/global-accessor";
+    import { onMount } from "svelte";
 
     let {
         icon,
         text = "text",
+        secretIcon = undefined,
+        secretText = undefined,
         href,
         expanded = false,
         focused = false,
@@ -16,17 +19,22 @@
         hint = text,
         showLoading = false,
     }: {
-        icon?: any,
-        text?: string,
-        href?: string,
-        expanded?: boolean,
-        focused?: boolean,
-        children?: any,
-        hint?: string | null,
-        showLoading?: boolean,
+        icon?: any;
+        text?: string;
+        secretIcon?: any | undefined;
+        secretText?: string | undefined;
+        href?: string;
+        expanded?: boolean;
+        focused?: boolean;
+        children?: any;
+        hint?: string | null;
+        showLoading?: boolean;
     } = $props();
 
     let txt: AnimTypingText | null = null;
+    let ico: IconSource | null = null;
+    let secretTxt: AnimTypingText | null = null;
+    let secretIco: IconSource | null = null;
     let view: HTMLElement;
 
     const ongoingTimeouts: Array<NodeJS.Timeout | number> = [];
@@ -42,17 +50,45 @@
         }
     }
 
+    function timeoutSecret() {
+      const key = setTimeout(() => {
+        triggerSecret();
+      }, 2000);
+      ongoingTimeouts.push(key);
+
+    }
+
+    function triggerSecret() {
+        const i = secretIco;
+        if(i != undefined){
+          i.setHidden(false);
+          ico?.setHidden(true);
+        }
+
+        const t = secretTxt;
+        if(t != undefined){
+            txt?.startTextAnimation(true);
+            secretTxt?.startTextAnimation();
+        }
+    }
+
+    function hideSecret() {
+        ico?.setHidden(false);
+        secretIco?.setHidden(true);
+        secretTxt?.startTextAnimation(true);
+    }
+
     function onPointerOver() {
         const key = setTimeout(() => {
             focused = true;
             clearTimeouts();
+            timeoutSecret();
         }, 50);
 
         const prevFocusedEntry = GlobalVars.get("focused-entry");
-        if(typeof prevFocusedEntry === "object" && prevFocusedEntry !== view) {
+        if (typeof prevFocusedEntry === "object" && prevFocusedEntry !== view) {
             const caller = prevFocusedEntry["__focusout"];
-            if(typeof caller === "function")
-                caller();
+            if (typeof caller === "function") caller();
         }
 
         ongoingTimeouts.push(key);
@@ -65,6 +101,7 @@
         clearTimeouts();
         focused = false;
 
+        hideSecret();
         txt?.startTextAnimation(true);
     }
 
@@ -74,12 +111,11 @@
             return;
         }
 
-        if (!showLoading)
-            return;
+        if (!showLoading) return;
 
         const reminder = children;
 
-        if(reminder === null || reminder === undefined) {
+        if (reminder === null || reminder === undefined) {
             nextStageAfterReminder();
             return;
         }
@@ -102,9 +138,9 @@
                     click: () => {
                         reminderCloseAccessor?.();
                         nextStageAfterReminder();
-                    }
-                }
-            ]
+                    },
+                },
+            ],
         });
     }
 
@@ -122,16 +158,20 @@
 
         // Show modal "redirecting" with cancel button
         const host = GlobalVars.get("ModalHost") as ModalHost;
-        host?.showModal(ModalLoading, {cancel: closeModalWeakRef, text: "Redirecting"},
+        host?.showModal(
+            ModalLoading,
+            { cancel: closeModalWeakRef, text: "Redirecting" },
             {
-                header: null, isUserCloseable: false,
+                header: null,
+                isUserCloseable: false,
                 onshow: (_, close) => {
                     closeModal = close;
                 },
                 dialogProps: {
-                    style: "min-width: 120px; min-height: 120px;"
-                }
-            });
+                    style: "min-width: 120px; min-height: 120px;",
+                },
+            },
+        );
 
         window.onabort = () => closeModal?.();
         window.onpagehide = () => closeModal?.();
@@ -140,31 +180,60 @@
             window.onbeforeunload = () => closeModal?.();
 
             document.removeEventListener("DOMContentLoaded", cancelLoad);
-        }
+        };
 
         document.addEventListener("DOMContentLoaded", cancelLoad);
     }
+
+
+    onMount(() => {
+      hideSecret();
+    });
 </script>
 
-<a bind:this={view} class="profile-button"
-   class:expanded={expanded}
-   class:focused={focused}
-   title={hint}
-   href={reminderIsEmpty() ? href : "javascript:void(0)"}
-   onfocusin={onPointerOver}
-   onfocusout={onPointerLeave}
-   onmouseenter={onPointerOver}
-   onmouseleave={onPointerLeave}
-   onclick={onClick}>
+<a
+    bind:this={view}
+    class="profile-button"
+    class:expanded
+    class:focused
+    title={secretText ?? hint}
+    href={reminderIsEmpty() ? href : "javascript:void(0)"}
+    onfocusin={onPointerOver}
+    onfocusout={onPointerLeave}
+    onmouseenter={onPointerOver}
+    onmouseleave={onPointerLeave}
+    onclick={onClick}
+>
     <!-- {@render icon?.()} -->
-    <IconSource icon={icon} size={32}/>
+    <div class="content">
+        <IconSource bind:this={ico} {icon} size={32} />
 
-    <span class="text">
-        <AnimTypingText bind:this={txt}
-                        text={text}
-                        disabled={expanded}
-                        duration={100}/>
-    </span>
+        <span class="text">
+            <AnimTypingText
+                bind:this={txt}
+                {text}
+                disabled={expanded}
+                duration={100}
+            />
+        </span>
+    </div>
+
+    <div class="secret">
+        {#if secretIcon != undefined}
+            <IconSource bind:this={secretIco} icon={secretIcon} wasHidden={true} size={32} />
+        {/if}
+
+        {#if secretText != undefined}
+            <span class="text">
+                <AnimTypingText
+                    bind:this={secretTxt}
+                    text={secretText}
+                    disabled={expanded}
+                    duration={100}
+                />
+            </span>
+        {/if}
+    </div>
 </a>
 
 <style>
@@ -174,24 +243,30 @@
     }
 
     .profile-button {
-        display: flex;
-        flex-wrap: nowrap;
-        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
         padding: 8px;
-        align-items: center;
 
         border: transparent 2px solid;
         border-radius: 8px;
         transition: all 0.25s linear;
     }
 
-    .profile-button > .text {
+    .profile-button > div {
+        display: flex;
+        flex-wrap: nowrap;
+        position: relative;
+        align-items: center;
+        grid-area: 1 /1;
+    }
+
+    .profile-button .text {
         overflow: hidden;
         white-space: nowrap;
         font-size: 1.2em;
     }
 
-    .profile-button > .text :global(span) {
+    .profile-button .text :global(span) {
         margin-left: 8px;
     }
 
