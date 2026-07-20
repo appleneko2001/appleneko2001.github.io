@@ -68,9 +68,12 @@
         <ProfileEntry icon="github" text="GitHub" showLoading={true}
                       href="https://github.com/appleneko2001"/>
     </div>
+
+
+    <!-- <div class="entries">
         <ProfileEntry icon="material:folder_special" text="Works" expanded={true} hint={null}
                       href="/works"/>
-    </div>
+    </div> -->
 
     <div class="footer-area">
         <MyButton text="Info" icon={{ icon: 'material:info', size: 16 }} click={about}/>
