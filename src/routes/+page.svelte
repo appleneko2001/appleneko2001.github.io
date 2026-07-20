@@ -1,4 +1,7 @@
 <script lang="ts">
+    export const prerender = true;
+    export const trailingSlash = 'always';
+
     import {fade} from 'svelte/transition'
     import ProfileEntry from "$lib/components/profile/entry.svelte";
     import ProfileAvatar from "$lib/components/profile/avatar.svelte";

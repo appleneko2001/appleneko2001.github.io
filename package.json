@@ -23,6 +23,7 @@
 		"vite": "^7.1.5"
 	},
 	"dependencies": {
+		"@sveltejs/adapter-static": "^3.0.10",
 		"focus-trap": "^7.6.5",
 		"npm-ls": "^1.0.0"
 	}

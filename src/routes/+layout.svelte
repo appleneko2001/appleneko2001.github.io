@@ -1,4 +1,7 @@
 <script lang="ts">
+    export const prerender = true;
+    export const trailingSlash = 'always';
+
     import favicon from '$lib/assets/favicon.svg';
     import ModalHost from '$lib/components/modals/modal-host.svelte';
     import ModalLoading from '$lib/layouts/modal-loading.svelte';
