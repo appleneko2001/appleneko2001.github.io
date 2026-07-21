@@ -6,10 +6,17 @@
     import ModalLoading from "$lib/layouts/modal-loading.svelte";
     import { GlobalVars } from "$lib/global-accessor";
     import { onMount } from "svelte";
+    import type { SnsEntryReminderModalText } from "../text-parts";
 
     let {
         icon,
         text = "text",
+        modalTexts = {
+          header: "Reminder",
+          proceed: "Click here to Proceed",
+          loading: "Redirecting",
+          cancel: "Cancel"
+        },
         secretIcon = undefined,
         secretText = undefined,
         href,
@@ -21,6 +28,7 @@
     }: {
         icon?: any;
         text?: string;
+        modalTexts?: SnsEntryReminderModalText;
         secretIcon?: any | undefined;
         secretText?: string | undefined;
         href?: string;
@@ -128,13 +136,13 @@
     function showReminder(reminder: any) {
         const modalHost = GlobalVars.get("ModalHost") as ModalHost;
         modalHost.showModal(reminder, undefined, {
-            header: "Reminder",
+            header: modalTexts.header,
             onshow: (_, close) => {
                 reminderCloseAccessor = close;
             },
             buttons: [
                 {
-                    text: "Proceed",
+                    text: modalTexts.proceed,
                     click: () => {
                         reminderCloseAccessor?.();
                         nextStageAfterReminder();
@@ -160,7 +168,7 @@
         const host = GlobalVars.get("ModalHost") as ModalHost;
         host?.showModal(
             ModalLoading,
-            { cancel: closeModalWeakRef, text: "Redirecting" },
+            { cancel: closeModalWeakRef, text: modalTexts.loading, buttonText: modalTexts.cancel },
             {
                 header: null,
                 isUserCloseable: false,

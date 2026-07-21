@@ -3,7 +3,11 @@
     import MyButton from "$lib/components/my-button.svelte";
     import {onMount} from "svelte";
 
-    let {cancel, text} = $props();
+    let {cancel, text, buttonText = "Cancel"} : {
+      cancel: Function,
+      text?: string,
+      buttonText?: string,
+    } = $props();
 
     let txt: AnimTypingText;
 
@@ -34,7 +38,7 @@
     {#if cancel !== undefined}
         <MyButton click={clickCancel}
                   icon={{ icon: "material:close", size: 24 }}
-                  text="Cancel"
+                  text={buttonText}
                   props={{}}/>
     {/if}
 </div>
