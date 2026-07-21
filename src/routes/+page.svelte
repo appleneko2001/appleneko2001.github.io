@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { MouseEventHandler } from "svelte/elements";
 
     const linkClickHandler = function(ev: MouseEvent){
       const link = ev.target as HTMLLinkElement;
