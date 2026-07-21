@@ -14,7 +14,7 @@
 {/snippet}
 
 <br/>
-<div class="text">Portfolio by github@appleneko2001</div>
+<div class="text">Portfolio and online contact card by github@appleneko2001</div>
 <br/>
 
 <div class="text">Powered by</div>
