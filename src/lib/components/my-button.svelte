@@ -30,6 +30,7 @@
         position: relative;
         display: flex;
         align-items: center;
+        line-height: 24px;
         gap: 4px;
     }
 
