@@ -2,6 +2,8 @@ import { mdsvex } from 'mdsvex';
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
+import { APP_REDIRECTS } from './src/redirects.js';
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://svelte.dev/docs/kit/integrations
@@ -23,7 +25,13 @@ const config = {
       fallback: '404.html',
       precompress: false,
 			strict: true,
-		})
+    }),
+    prerender: {
+      entries: [
+        '*',
+        ...Object.keys(APP_REDIRECTS)
+      ]
+    }
 	},
 	extensions: ['.svelte', '.svx']
 };
