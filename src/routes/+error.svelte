@@ -5,21 +5,21 @@
     import ProfileEntry from "$lib/components/profile/entry.svelte";
 
     let title = "Error!";
-    let msg = page.error?.message ?? "Nothing to say ?!";
+    let msgs = page.error?.message ?? ["Nothing to say ?!", "人家无话可说…？！"];
 
     switch (page.status) {
         case 403:
-            msg = "No! You can't do that!!!";
+            msgs = ["No! You can't do that!!!", "您不可以这么做！"];
             break;
         case 404:
-            msg = "This page doesn't exist at all!";
+            msgs = ["This page doesn't exist at all!", "此页面不存在！"];
             break;
         case 200:
-            msg = "How did you get here ?";
+            msgs = ["How did you get here ?", "您…怎么做到的…？"];
             title = "Error...?";
             break;
         case 500:
-            msg = "Internal server error! Not your fault! 😵";
+            msgs = ["Internal server error! Not your fault! 😵", "坏掉了…不是您的错！😵"];
             break;
     }
 
@@ -30,7 +30,12 @@
      out:fly={{ y: -100, duration: 300 }}>
     <div class="card">
         <div class="card-header">{title}</div>
-        <div class="card-text">{msg}</div>
+        <div class="card-text">
+            {#each msgs as msg}
+                <div>{msg}</div>
+            {/each}
+        </div>
+
 
         <ProfileEntry icon="material:home" text="Go home" expanded={true} hint={null}
                       href="/"/>
@@ -63,5 +68,9 @@
 
     .card-text {
         margin: 0 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
     }
 </style>

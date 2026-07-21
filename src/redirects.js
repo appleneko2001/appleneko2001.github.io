@@ -1,5 +1,7 @@
 // credit: https://supun.io/sveltekit-static-redirects
 
 export const APP_REDIRECTS = {
-  '/': '/home'
+  '/home': '/',
+  '/en': '/en/home',
+  '/zh': '/zh/home'
 };

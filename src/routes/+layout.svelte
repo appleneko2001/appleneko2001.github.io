@@ -50,6 +50,11 @@
         z-index: -1;
     }
 
+    .app-layout {
+        position: absolute;
+        inset: 0;
+    }
+
     .not-front {
         z-index: -1;
     }
@@ -59,7 +64,7 @@
     }
 
     .app-page-host {
-        position: relative;
+        /*position: relative;*/
         inset: 0;
     }
 

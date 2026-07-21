@@ -2,53 +2,53 @@
     import LinkButton from "$lib/components/link-button.svelte";
 </script>
 
-{#snippet Card(header, description)}
+{#snippet Card(header: string, description: string)}
     <div class="tech-stack-card">
         <div class="header">{header}</div>
         <div>{description}</div>
     </div>
 {/snippet}
 
-{#snippet linkItem(text, href)}
+{#snippet linkItem(text: string, href: string)}
     <li><a href={href} target="_blank">{text}</a></li>
 {/snippet}
 
 <br/>
-<div class="text">Portfolio by github@appleneko2001</div>
+<div class="text">由笨蛋夜星（appleneko2001）制作的极简简历和联系方式卡片</div>
 <br/>
 
-<div class="text">Powered by</div>
+<div class="text">由以下技术驱动</div>
 <div>
     <LinkButton icon={{icon: "svelte", size: 32, fill: "#FF3E00"}}
                 href="https://svelte.dev"
                 style="gap: 8px;"
                 target="_blank">
-        {@render Card("SvelteKit", "Open source full-stack solution")}
+        {@render Card("SvelteKit", "开源全栈解决方案")}
     </LinkButton>
     <LinkButton icon={{icon: "cloudflareworkers", size: 32, fill: "#F38020"}}
                 href="https://workers.cloudflare.com"
                 style="gap: 8px;"
                 target="_blank">
-        {@render Card("Cloudflare Workers®", "Easy-to-deploy serverless platform")}
+        {@render Card("Cloudflare Workers®", "易上手的 serverless 平台")}
     </LinkButton>
     <LinkButton icon={{icon: "github", size: 32}}
                 href="https://github.com/appleneko2001/appleneko2001.github.io/tree/sveltekit-ng"
                 style="gap: 8px;"
                 target="_blank">
-        {@render Card("GitHub", "Used for holding the Portfolio source code")}
+        {@render Card("GitHub", "用于存放简历程式码")}
     </LinkButton>
 </div>
 
-<div class="text">Assets (e.g. icon SVGs) source</div>
+<div class="text">素材（如矢量图像）来源</div>
 <ul>
     {@render linkItem("SimpleIcons", "https://simpleicons.org/")}
-    {@render linkItem("Google Fonts and Material Icons (Rounded)", "https://fonts.google.com/")}
+    {@render linkItem("Google Fonts 和 Material Icons (Rounded)", "https://fonts.google.com/")}
 </ul>
 
-<div class="text">Third-party libraries</div>
+<div class="text">第三方程式库</div>
 <ul>
     {@render linkItem(
-        "FocusTrap (used for restrict keyboard navigation to one scope of view)",
+        "FocusTrap（用于限制键盘导航到指定控件）",
         "https://github.com/focus-trap/focus-trap")}
 </ul>
 <br/>
