@@ -19,23 +19,27 @@
     {#if icon !== undefined}
         <IconSource {...icon}/>
     {/if}
-    <span>{text}</span>
+    <div class="text">{text}</div>
 </button>
 
 <style>
     button {
         background: none;
         border: none;
-        padding: 6px;
+        padding: 8px;
         position: relative;
         display: flex;
         align-items: center;
-        line-height: 24px;
+        align-content: center;
+        line-height: 20px;
         gap: 4px;
+
+        user-select: none;
     }
 
-    button > span {
-        font-size: 1.2em
+    button > .text {
+        display: inline-block;
+        font-size: 16px;
     }
 
     button::before {
