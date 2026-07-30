@@ -23,7 +23,7 @@
     let progress: number;
     let start: number = 0;
 
-    const ongoingIntervals: Array<number | NodeJS.Timeout> = [];
+    const ongoingIntervals: Array<number> = [];
 
     export function setPlayEndCallback(func: Function | undefined) {
         onPlayEnd = func;
@@ -57,7 +57,7 @@
     }
 
     function clearIntervalEvents() {
-        let item: number | NodeJS.Timeout | undefined;
+        let item: number | undefined;
 
         while ((item = ongoingIntervals.pop()) != undefined) {
             clearInterval(item);
@@ -137,8 +137,9 @@
 
     reset();
 
-    if (playForwardOnLoad !== undefined)
-        startTextAnimation(!playForwardOnLoad);
+    const init = playForwardOnLoad;
+    if (init !== undefined)
+        startTextAnimation(!init);
 </script>
 
 <span>{text}</span>

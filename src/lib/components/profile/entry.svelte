@@ -45,14 +45,14 @@
     let secretIco: IconSource | null = null;
     let view: HTMLElement;
 
-    const ongoingTimeouts: Array<NodeJS.Timeout | number> = [];
+    const ongoingTimeouts: Array<number> = [];
 
     function reminderIsEmpty() {
         return children === null || children === undefined;
     }
 
     function clearTimeouts() {
-        let item: NodeJS.Timeout | number | undefined;
+        let item: number | undefined;
         while ((item = ongoingTimeouts.pop()) != undefined) {
             clearTimeout(item);
         }
@@ -86,6 +86,8 @@
         secretTxt?.startTextAnimation(true);
     }
 
+    const unfocusAccessor = () => onPointerLeave();
+
     function onPointerOver() {
         const key = setTimeout(() => {
             focused = true;
@@ -93,19 +95,18 @@
             timeoutSecret();
         }, 50);
 
-        const prevFocusedEntry = GlobalVars.get("focused-entry");
-        if (typeof prevFocusedEntry === "object" && prevFocusedEntry !== view) {
-            const caller = prevFocusedEntry["__focusout"];
-            if (typeof caller === "function") caller();
+        const prevFocusedEntry = GlobalVars.get("entry-unfocus");
+        if (typeof prevFocusedEntry === "function" && prevFocusedEntry != unfocusAccessor) {
+          prevFocusedEntry();
         }
 
         ongoingTimeouts.push(key);
         txt?.startTextAnimation();
 
-        GlobalVars.set("focused-entry", view);
+        GlobalVars.set("entry-unfocus", unfocusAccessor);
     }
 
-    function onPointerLeave() {
+    export function onPointerLeave() {
         clearTimeouts();
         focused = false;
 
@@ -193,11 +194,34 @@
         document.addEventListener("DOMContentLoaded", cancelLoad);
     }
 
-
     onMount(() => {
       hideSecret();
+
+      const button = view as HTMLLinkElement;
+
+      if(button === null)
+        throw new EvalError("Cannot get Button instance while onMount stage");
+
+      button.addEventListener("focusin", onPointerOver);
+      button.addEventListener("pointerenter", onPointerOver);
+
+      // button.addEventListener("focusout", onPointerLeave);
+      //button.addEventListener("pointerleave", onPointerLeave);
+
+      return () => {
+        button.removeEventListener("focusin", onPointerOver);
+        button.removeEventListener("pointerenter", onPointerOver);
+
+        // button.removeEventListener("focusout", onPointerLeave);
+        //button.removeEventListener("pointerleave", onPointerLeave);
+      };
     });
 </script>
+
+<!-- onfocusin={onPointerOver}
+onfocusout={onPointerLeave}
+onmouseenter={onPointerOver}
+onmouseleave={onPointerLeave} -->
 
 <a
     bind:this={view}
@@ -206,12 +230,15 @@
     class:focused
     title={secretText ?? hint}
     href={reminderIsEmpty() ? href : "javascript:void(0)"}
-    onfocusin={onPointerOver}
-    onfocusout={onPointerLeave}
-    onmouseenter={onPointerOver}
-    onmouseleave={onPointerLeave}
     onclick={onClick}
 >
+    <span class="copy-only-text">
+        <span>{text}</span>{#if secretText != undefined}
+            <span>
+                <span> </span>
+                <span>({secretText})</span>
+        </span>{/if}<span>: {reminderIsEmpty() ? href : "(*)"}</span>
+    </span>
     <!-- {@render icon?.()} -->
     <div class="content">
         <IconSource bind:this={ico} {icon} size={32} />
@@ -250,6 +277,10 @@
         color: var(--foreground-colour);
     }
 
+    a > * {
+        user-select: none;
+    }
+
     .profile-button {
         display: grid;
         grid-template-columns: 1fr;
@@ -258,6 +289,13 @@
         border: transparent 2px solid;
         border-radius: 8px;
         transition: all 0.25s linear;
+    }
+
+    .profile-button > .copy-only-text{
+        user-select: text;
+        width: 0;
+        height: 0;
+        overflow: clip;
     }
 
     .profile-button > div {
