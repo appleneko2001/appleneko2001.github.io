@@ -12,7 +12,7 @@
     button {
         background: none;
         border: none;
-        padding: 6px;
+        padding: 4px;
         position: relative;
     }
 
