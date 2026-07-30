@@ -2,6 +2,8 @@
     --foreground-colour: #000;
     --background-colour: #fff;
 
+    --primary-colour: #8c66ff;
+
     --card-background-colour: #fff;
     --card-shadow: 0 16px 32px 4px rgba(0, 0, 0, 0.3);
 }
@@ -11,10 +13,23 @@
         --foreground-colour: #fff;
         --background-colour: #000;
 
+        --primary-colour: #EB6F92;
+
         --card-background-colour: #202020;
     }
 }
 
 * {
     color: var(--foreground-colour);
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+*::selection,
+*::-moz-selection{
+    color: var(--background-colour);
+    background-color: var(--primary-colour);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Noto Sans", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Source Han Sans TW", sans-serif;
 }
