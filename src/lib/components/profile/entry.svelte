@@ -44,8 +44,19 @@
     let secretTxt: AnimTypingText | null = null;
     let secretIco: IconSource | null = null;
     let view: HTMLElement;
+    let debounce_event_timing: number = 0;
 
     const ongoingTimeouts: Array<number> = [];
+
+    function debounce_should_pass(from: string | undefined, timestamp: number) {
+      const old = debounce_event_timing;
+      const diff = Math.abs(timestamp - old);
+      debounce_event_timing = timestamp;
+
+      const result = diff < 10;
+      // console.log(`${from} Should bypass: ${result} Debounce: ${old.toFixed(2)} Event: ${timestamp.toFixed(2)}`);
+      return result;
+    }
 
     function reminderIsEmpty() {
         return children === null || children === undefined;
@@ -115,6 +126,12 @@
     }
 
     function onClick(e: UIEvent) {
+        if(debounce_should_pass("click", e.timeStamp))
+        {
+            e.preventDefault();
+            return;
+        }
+
         if (!focused && expanded !== true) {
             e.preventDefault();
             return;
@@ -202,17 +219,23 @@
       if(button === null)
         throw new EvalError("Cannot get Button instance while onMount stage");
 
-      button.addEventListener("focusin", onPointerOver);
-      button.addEventListener("pointerenter", onPointerOver);
+      button.addEventListener("focusin", (ev: FocusEvent) => {
+        debounce_should_pass("focus", ev.timeStamp);
+        onPointerOver();
+      });
+      button.addEventListener("pointerenter", (ev: PointerEvent) => {
+        debounce_should_pass("enter",ev.timeStamp);
+        onPointerOver();
+      });
 
-      // button.addEventListener("focusout", onPointerLeave);
+      button.addEventListener("blur", onPointerLeave);
       //button.addEventListener("pointerleave", onPointerLeave);
 
       return () => {
         button.removeEventListener("focusin", onPointerOver);
         button.removeEventListener("pointerenter", onPointerOver);
 
-        // button.removeEventListener("focusout", onPointerLeave);
+        button.removeEventListener("blur", onPointerLeave);
         //button.removeEventListener("pointerleave", onPointerLeave);
       };
     });
