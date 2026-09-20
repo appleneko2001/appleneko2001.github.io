@@ -65,7 +65,7 @@
             </div>
         </ProfileEntry>
         <ProfileEntry icon="bluesky" text="Bluesky" showLoading={true}
-                      href="https://appleneko2001.bsky.social"/>
+                      href="https://bsky.app/profile/appleneko.moe"/>
         <ProfileEntry icon="osu" text="osu!" showLoading={true}
                       href="https://osu.ppy.sh/users/11455502"/>
     </div>
